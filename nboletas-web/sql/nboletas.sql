@@ -1,6 +1,7 @@
+delete from ReembolsoEntity;
+delete from EnvioEntity;
 delete from BoletaEntity;
 delete from OrganizadorEntity;
-delete from EnvioEntity;
 delete from ComentarioEntity;
 delete from FuncionEntity;
 delete from EspectaculoEntity;
@@ -12,8 +13,7 @@ delete from EspectaculoEntity_OrganizadorEntity;
 delete from UsuarioEntity;
 
 insert into BoletaEntity (id, precio, vendida) values (2, 20.23, 1);
-insert into BoletaEntity (id, precio, vendida) values (3, 0.23, 0);
-insert into BoletaEntity (id, precio, vendida) values (4, 0.00, 1);
+
 
 insert into OrganizadorEntity (id, nombreEmpresa) values (1, 'Yo');
 insert into OrganizadorEntity (id, nombreEmpresa) values (2, 'YoYQue');
@@ -26,7 +26,7 @@ insert into EspectaculoEntity (id, nombre, descripcion) values (3, 'Concierto Sh
 insert into EspectaculoEntity (id, nombre, descripcion) values (4, 'Gira Portugal The Man', 'Concierto');
 
 insert into EspectaculoEntity_OrganizadorEntity (espectaculos_id,organizador_id) values (1,1);
-insert into EspectaculoEntity_OrganizadorEntity (espectaculos_id,organizador_id) values (3,3); 
+insert into EspectaculoEntity_OrganizadorEntity (espectaculos_id,organizador_id) values (3,1); 
 insert into EspectaculoEntity_OrganizadorEntity (espectaculos_id,organizador_id) values (4,3);
 insert into EspectaculoEntity_OrganizadorEntity (espectaculos_id,organizador_id) values (1,3); 
 
@@ -65,6 +65,16 @@ insert into ArtistaEntity (id, nombre) values (2, 'Shakira');
 insert into ArtistaEntity (id, nombre) values (3, 'Cirque du Soleil');
 insert into ArtistaEntity (id, nombre) values (4, 'Portugal The Man');
 
+
+insert into UsuarioEntity (id, userName, password, nombreUsuario, email, pais, ciudad) values (1, 'aa', '123', 'yo', 'email', 'pais', 'ciudad');
+insert into BoletaEntity (id, precio, vendida, usuario_id, funcion_id, silla_id) values (1, 100.23, 0, 1, 1, 50);
+
+insert into BoletaEntity (id, precio, vendida) values (3, 0.23, 0);
+insert into EnvioEntity (id, direccion, boleta_id) values (1,'Calle 43 #7-26 - Aprt:101', 3);
+
+insert into BoletaEntity (id, precio, vendida) values (4, 1.00, 1);
+insert into ReembolsoEntity(id, valor, boleta_id) values (1, 100.00, 4);
+
 insert into EspectaculoEntity (id, nombre, descripcion) values (1, 'Septimo dia', 'Espectaculo de Cirque Du Soleil junto a Soda Estereo');
 insert into EspectaculoEntity (id, nombre, descripcion) values (2, 'P.A.R.C.E', 'Gira de Juanes pro Colombia');
 insert into EspectaculoEntity (id, nombre, descripcion) values (3, 'Concierto Shakira', 'Concierto');
@@ -72,3 +82,4 @@ insert into EspectaculoEntity (id, nombre, descripcion) values (4, 'Gira Portuga
 
 insert into FuncionEntity (id, fecha, espectaculo_id) values (3,'10/10/2014',2);
 
+>

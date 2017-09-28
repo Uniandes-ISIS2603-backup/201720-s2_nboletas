@@ -25,12 +25,17 @@ public class ReembolsoDetailDTO extends ReembolsoDTO{
 
     public ReembolsoDetailDTO(ReembolsoEntity entity) {
         super(entity);
-        BoletaEntity boletaA = entity.getBoleta();
-        if (boletaA != null)
-            boleta = new BoletaDTO(entity.getBoleta());
+        BoletaEntity boletaA =entity.getBoleta();
+        if (null != boletaA) {
+            boleta = new BoletaDTO(boletaA);
+        }
+        entity.setBoleta(null);
+        
         UsuarioEntity usuarioA = entity.getUsuario();
-        if(usuarioA != null)
-            usuario = new UsuarioDTO(entity.getUsuario());
+        if (null != usuarioA) {
+            usuario = new UsuarioDTO(usuarioA);
+        }
+        entity.setUsuario(null);
     }
 
     @Override
