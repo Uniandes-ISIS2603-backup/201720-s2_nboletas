@@ -1,0 +1,30 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>{{"Reembolso #" + currentReembolso.id}}</h2>
+        </div>
+    </header>
+    <a class="image featured"><img ng-src="{{currentReembolso.imagen}}" alt="" /></a>
+    <div class="col-md-3">
+        <dl>                             
+
+            <hr>
+            <dt>Valor</dt>
+            <dd>{{currentReembolso.valor| currency}}</dd>
+
+            <hr>
+            <dt>Nombre Del Usuario</dt>
+            <dd><a ui-sref="usuarioDetail({usuarioId: currentReembolso.usuario.id})">{{currentReembolso.usuario.userName}}</a></dd>
+
+            <hr>
+            <dt>Boleta</dt>
+            <dd><a ui-sref="boletaDetail({boletaId: currentReembolso.boleta.id})">{{currentReembolso.boleta.id}}</a></dd>
+        </dl>
+    </div>
+    <footer>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>

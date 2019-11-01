@@ -7,14 +7,12 @@ package co.edu.uniandes.theexceptions.nboletas.resources;
 
 import co.edu.uniandes.theexceptions.nboletas.dtos.ReembolsoDetailDTO;
 import co.edu.uniandes.theexceptions.nboletas.ejb.BoletaLogic;
-import co.edu.uniandes.theexceptions.nboletas.ejb.ReembolsoLogic;
-import co.edu.uniandes.theexceptions.nboletas.entities.BoletaEntity;
 import co.edu.uniandes.theexceptions.nboletas.entities.ReembolsoEntity;
 import co.edu.uniandes.theexceptions.nboletas.exceptions.BusinessLogicException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -37,87 +35,37 @@ public class BoletaReembolsoResource {
     @Inject
     BoletaLogic boletaLogic;
 
-    @Inject
-    ReembolsoLogic reembolsoLogic;
-
     @POST
-    public ReembolsoDetailDTO createBoletaReembolso(@PathParam("idBoleta") Long idBoleta, ReembolsoDetailDTO reembolso) throws BusinessLogicException {
-        BoletaEntity boleta = boletaLogic.find(idBoleta);
-        if (boleta == null) {
-            throw new BusinessLogicException("No existe la boleta con el id: " + idBoleta);
-        }
-        ReembolsoEntity reembolsoE = reembolso.toEntity();
-        reembolsoE.setBoleta(boleta);
-        ReembolsoEntity reembolsoCreado = reembolsoLogic.create(reembolsoE);
+    public ReembolsoDetailDTO createBoletaReembolso(@PathParam("idBoleta") Long idBoleta, ReembolsoDetailDTO reembolso) throws BusinessLogicException, PersistenceException {
+        ReembolsoEntity reembolsoCreado = boletaLogic.createBoletaReembolso(idBoleta, reembolso.toEntity());
         return new ReembolsoDetailDTO(reembolsoCreado);
     }
 
     @GET
-    public List<ReembolsoDetailDTO> getReembolsos(@PathParam("idBoleta") Long idBoleta) throws BusinessLogicException {
-        List<ReembolsoEntity> list = new ArrayList<>();
-        BoletaEntity boleta = boletaLogic.find(idBoleta);
-        if (boleta == null) {
-            throw new BusinessLogicException("No existe la boleta con ese id: " + idBoleta);
-        }
-        ReembolsoEntity reembolso = boleta.getReembolso();
-        if (reembolso != null) {
-            list.add(boleta.getReembolso());
-        }
-        return listEntity2DetailDTO(list);
+    public List<ReembolsoDetailDTO> getReembolsos(@PathParam("idBoleta") Long idBoleta) throws BusinessLogicException, PersistenceException {
+        List<ReembolsoEntity> list = boletaLogic.findBoletaReembolsos(idBoleta);
+        return ReembolsoDetailDTO.listReembolsoEntity2ReembolsoDetailDTO(list);
     }
 
     @GET
     @Path("{idReembolso: \\d+}")
-    public ReembolsoDetailDTO getReembolso(@PathParam("idBoleta") Long idBoleta, @PathParam("idReembolso") Long idReembolso) throws BusinessLogicException {
-        BoletaEntity boleta = boletaLogic.find(idBoleta);
-        if (boleta == null) {
-            throw new BusinessLogicException("No existe la boleta con ese id: " + idBoleta);
-        }
-        ReembolsoEntity reembolso = reembolsoLogic.find(idReembolso);
-        if (reembolso == null) {
-            throw new BusinessLogicException("No existe el reembolso con ese id: " + idReembolso);
-        }
-        reembolso.setBoleta(boleta);
+    public ReembolsoDetailDTO getReembolso(@PathParam("idBoleta") Long idBoleta, @PathParam("idReembolso") Long idReembolso) throws BusinessLogicException, PersistenceException {
+        ReembolsoEntity reembolso = boletaLogic.findBoletaReembolso(idBoleta, idReembolso);
         return new ReembolsoDetailDTO(reembolso);
     }
 
     @PUT
     @Path("{idReembolso: \\d+}")
-    public ReembolsoDetailDTO updateBoletaReembolso(@PathParam("idBoleta") Long idBoleta, @PathParam("idReembolso") Long idReembolso, ReembolsoDetailDTO reembolso) throws BusinessLogicException {
-        BoletaEntity boleta = boletaLogic.find(idBoleta);
-        if (boleta == null) {
-            throw new BusinessLogicException("No existe la boleta con ese id: " + idBoleta);
-        }
-        if (null == reembolsoLogic.find(idReembolso)) {
-            throw new BusinessLogicException("No existe el reembolso con ese id: " + idReembolso);
-        }
-        ReembolsoEntity envioActualizar = reembolso.toEntity();
-        envioActualizar.setBoleta(boleta);
-        envioActualizar.setId(idReembolso);
-        ReembolsoEntity actual = reembolsoLogic.update(envioActualizar);
+    public ReembolsoDetailDTO updateBoletaReembolso(@PathParam("idBoleta") Long idBoleta, @PathParam("idReembolso") Long idReembolso, ReembolsoDetailDTO reembolso) throws BusinessLogicException, PersistenceException {
+        ReembolsoEntity reembolsoE = reembolso.toEntity();
+        reembolsoE.setId(idReembolso);
+        ReembolsoEntity actual = boletaLogic.updateBoletaReembolso(idBoleta, reembolsoE);
         return new ReembolsoDetailDTO(actual);
     }
 
     @DELETE
     @Path("{idReembolso: \\d+}")
-    public void deleteBoletReembolso(@PathParam("idBoleta") Long idBoleta, @PathParam("idReembolso") Long idReembolso) throws BusinessLogicException {
-        BoletaEntity boleta = boletaLogic.find(idBoleta);
-        if (boleta == null) {
-            throw new BusinessLogicException("No existe la boleta con ese id: " + idBoleta);
-        }
-        ReembolsoEntity reembolso = reembolsoLogic.find(idReembolso);
-        if (reembolso == null) {
-            throw new BusinessLogicException("No existe el reembolso con ese id: " + idReembolso);
-        }
-        reembolso.setBoleta(boleta);
-        reembolsoLogic.delete(reembolso);
-    }
-
-    private List<ReembolsoDetailDTO> listEntity2DetailDTO(List<ReembolsoEntity> entityList) {
-        List<ReembolsoDetailDTO> list = new ArrayList<>();
-        for (ReembolsoEntity entity : entityList) {
-            list.add(new ReembolsoDetailDTO(entity));
-        }
-        return list;
+    public void deleteBoletReembolso(@PathParam("idBoleta") Long idBoleta, @PathParam("idReembolso") Long idReembolso) throws BusinessLogicException, PersistenceException {
+        boletaLogic.deleteBoletaReembolso(idBoleta, idReembolso);
     }
 }

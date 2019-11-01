@@ -12,8 +12,9 @@ import co.edu.uniandes.theexceptions.nboletas.entities.ArtistaEntity;
  * @author jf.ramos
  */
 public class ArtistaDTO {
-    
+
     private Long id;
+    private String imagen;
     private String nombre;
 
     /**
@@ -31,6 +32,7 @@ public class ArtistaDTO {
     public ArtistaDTO(ArtistaEntity artista) {
         this.id = artista.getId();
         this.nombre = artista.getNombre();
+        this.imagen = artista.getImagen();
     }
 
     /**
@@ -46,6 +48,14 @@ public class ArtistaDTO {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
     public String getNombre() {
         return nombre;
@@ -54,7 +64,6 @@ public class ArtistaDTO {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
 
     /**
      * Convertir DTO a Entity
@@ -65,7 +74,8 @@ public class ArtistaDTO {
         ArtistaEntity entity = new ArtistaEntity();
         entity.setId(this.id);
         entity.setNombre(this.nombre);
+        entity.setImagen(this.imagen);
         return entity;
     }
-    
+
 }

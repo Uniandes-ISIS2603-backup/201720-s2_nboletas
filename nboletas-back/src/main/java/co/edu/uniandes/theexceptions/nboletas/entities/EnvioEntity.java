@@ -24,6 +24,9 @@ public class EnvioEntity extends BaseEntity implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     private BoletaEntity boleta;
 
+    public String imagen;
+    
+    
     /**
      * @return the direccion
      */
@@ -52,4 +55,18 @@ public class EnvioEntity extends BaseEntity implements Serializable {
         this.boleta = boleta;
     }
 
+    
+     /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
 }

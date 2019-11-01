@@ -33,18 +33,17 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @Stateless
 public class EnvioResource {
-@Inject
+
+    @Inject
     EnvioLogic envioLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
     private static final Logger LOGGER = Logger.getLogger(EnvioResource.class.getName());
 
-    
-    
     /**
      * POST http://localhost:8080/nboletas-web/api/envios
      *
-     * @para envio correponde a la representación java del objeto json
-     * enviado en el llamado.
+     * @para envio correponde a la representación java del objeto json enviado
+     * en el llamado.
      * @return Devuelve el objeto json de entrada que contiene el id creado por
      * la base de datos y el tipo del objeto java. Ejemplo: { "type":
      * "EnvioDetailDTO", "id": 1, atributo1 : "valor" }
@@ -66,11 +65,9 @@ public class EnvioResource {
         }
         return new EnvioDetailDTO(entity);
     }
-    
-    
+
     /**
-     * GET para todas los Envios.
-     * http://localhost:8080/nboletas-web/api/envios
+     * GET para todas los Envios. http://localhost:8080/nboletas-web/api/envios
      *
      * @return la lista de todas los Envios en objetos json DTO.
      * @throws BusinessLogicException
@@ -81,21 +78,20 @@ public class EnvioResource {
     }
 
     /**
-     * PUT http://localhost:8080/nboletas-web/api/envios/1 Ejemplo json {
-     * "id": 1, "atirbuto1": "Valor nuevo" }
+     * PUT http://localhost:8080/nboletas-web/api/envios/1 Ejemplo json { "id":
+     * 1, "atirbuto1": "Valor nuevo" }
      *
      * @param id corresponde al Envio a actualizar.
-     * @param envio corresponde al objeto con los cambios que se van a
-     * realizar.
+     * @param envio corresponde al objeto con los cambios que se van a realizar.
      * @return El envio actualizado.
      * @throws BusinessLogicException
      *
-     * En caso de no existir el id del envio a actualizar se retorna un 404
-     * con el mensaje.
+     * En caso de no existir el id del envio a actualizar se retorna un 404 con
+     * el mensaje.
      */
     @PUT
     @Path("{id: \\d+}")
-    public EnvioDetailDTO updateEnvio(@PathParam("id") Long id, EnvioDetailDTO envio)throws BusinessLogicException {
+    public EnvioDetailDTO updateEnvio(@PathParam("id") Long id, EnvioDetailDTO envio) throws BusinessLogicException {
 
         envio.setId(id);
         EnvioEntity entity = envioLogic.find(id);
@@ -111,8 +107,8 @@ public class EnvioResource {
      * @param id corresponde al envio a borrar.
      * @throws BusinessLogicException
      *
-     * En caso de no existir el id del envio a borrar se retorna un 404
-     * con el mensaje.
+     * En caso de no existir el id del envio a borrar se retorna un 404 con el
+     * mensaje.
      *
      */
     @DELETE

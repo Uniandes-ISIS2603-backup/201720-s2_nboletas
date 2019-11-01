@@ -69,7 +69,7 @@ public class EspectaculoResource {
     public List<EspectaculoDetailDTO> getEspectaculos() throws BusinessLogicException {
         return listEntity2DetailDTO(espectaculoLogic.findAll());
     }
-    
+
     @GET
     @Path("{id: \\d+}")
     public EspectaculoDetailDTO getEspectaculo(@PathParam("id") Long id) throws BusinessLogicException {
@@ -80,10 +80,9 @@ public class EspectaculoResource {
         return new EspectaculoDetailDTO(espectaculo);
     }
 
-
     /**
-     * PUT http://localhost:8080/nboletas-web/api/espectaculos/1 Ejemplo json { "id":
-     * 1, "atirbuto1": "Valor nuevo" }
+     * PUT http://localhost:8080/nboletas-web/api/espectaculos/1 Ejemplo json {
+     * "id": 1, "atirbuto1": "Valor nuevo" }
      *
      * @param id corresponde a la Boleta a actualizar.
      * @param espectaculo corresponde al objeto con los cambios que se van a
@@ -91,13 +90,13 @@ public class EspectaculoResource {
      * @return El espectaculo actualizado.
      * @throws BusinessLogicException
      *
-     * En caso de no existir el id del Espectaculo a actualizar se retorna un 404
-     * con el mensaje.
+     * En caso de no existir el id del Espectaculo a actualizar se retorna un
+     * 404 con el mensaje.
      */
     @PUT
     @Path("{id: \\d+}")
     public EspectaculoDetailDTO updateEspectaculo(@PathParam("id") Long id, EspectaculoDetailDTO espectaculo) throws BusinessLogicException, UnsupportedOperationException {
-        
+
         espectaculo.setId(id);
         if (null == espectaculoLogic.find(id)) {
             throw new BusinessLogicException("No existe la boleta con el id: " + id);
@@ -113,8 +112,8 @@ public class EspectaculoResource {
      * @param id corresponde al Espectaculo a borrar.
      * @throws BusinessLogicException
      *
-     * En caso de no existir el id del Espectaculo a actualizar se retorna un 404
-     * con el mensaje.
+     * En caso de no existir el id del Espectaculo a actualizar se retorna un
+     * 404 con el mensaje.
      *
      */
     @DELETE
@@ -131,8 +130,8 @@ public class EspectaculoResource {
      *
      * lista de entidades a DTO.
      *
-     * Este método convierte una lista de objetos EspectaculoEntity a una lista de
-     * objetos BoletaDetailDTO (json)
+     * Este método convierte una lista de objetos EspectaculoEntity a una lista
+     * de objetos BoletaDetailDTO (json)
      *
      * @param entityList corresponde a la lista de Boletas de tipo Entity que
      * vamos a convertir a DTO.

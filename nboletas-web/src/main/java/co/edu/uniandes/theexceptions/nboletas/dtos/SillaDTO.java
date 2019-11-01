@@ -16,6 +16,8 @@ public class SillaDTO {
     private Long id;
 
     private double costo;
+    
+    private String imagen;
 
     public SillaDTO() {
 
@@ -24,6 +26,7 @@ public class SillaDTO {
     public SillaDTO(SillaEntity silla) {
         this.id = silla.getId();
         this.costo = silla.getCosto();
+        this.imagen = silla.getImagen();
     }
 
     public Long getId() {
@@ -46,7 +49,23 @@ public class SillaDTO {
         SillaEntity silla = new SillaEntity();
         silla.setId(this.id);
         silla.setCosto(this.costo);
+        silla.setImagen(this.getImagen());
         return silla;
     }
 
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    
 }

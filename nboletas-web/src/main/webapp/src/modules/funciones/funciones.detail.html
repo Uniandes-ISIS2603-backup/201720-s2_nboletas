@@ -1,0 +1,45 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>{{currentFuncion.espectaculo.nombre + " - Funcion #" + currentFuncion.id}}</h2>
+        </div>
+    </header>
+    <a class="image featured"><img ng-src="{{currentFuncion.imagen}}" alt="" /></a>
+    <div class="col-md-3">
+        <dl> 
+            <hr>
+            <dt>Fecha</dt>
+            <dd>{{currentFuncion.fecha| date:'yyyy-MM-dd'}}</dd>
+
+            <hr>
+            <dt>Hora</dt>
+            <dd>{{currentFuncion.hora}}</dd>
+
+            <hr>
+            <dt>Espectaculo</dt>
+            <dd><a ui-sref="espectaculoDetail({espectaculoId: currentFuncion.espectaculo.id})">{{currentFuncion.espectaculo.nombre}}</a></dd>
+
+            <hr>
+            <dt>Lugar</dt>
+            <dd><a ui-sref="lugaresDetail({lugarId: currentFuncion.lugar.id})">{{currentFuncion.lugar.direccion}}</a></dd>
+            </dd>
+            <hr>
+            <dt>Boletas</dt>
+            <dd>
+                <ul>
+                    <li ng-if="currentFuncion.boletas.length===0">
+                        <p><i>No hay boletas asociadas</i></p>
+                    </li>
+                    <li ng-repeat="x in currentFuncion.boletas">
+                        <a href="#!/boletas/{{x.id}}/detail">{{"Boleta #" + x.id}}</a>
+                    </li>
+                </ul>
+            </dd>
+    </div>
+    <footer>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>

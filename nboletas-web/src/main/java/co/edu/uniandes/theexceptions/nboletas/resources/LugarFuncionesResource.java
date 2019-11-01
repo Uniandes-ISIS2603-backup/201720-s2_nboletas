@@ -38,159 +38,98 @@ import javax.ws.rs.Produces;
 @Consumes("application/json")
 @Stateless
 public class LugarFuncionesResource {
-    @Inject
-    private FuncionLogic funcionLogic;
-    
+
     @Inject
     private LugarLogic lugarLogic;
-    
+
     /**
      * GET para las funciones de un lugar especifico.
      * http://localhost:8080/nboletas-web/api/lugares/idLugar/funciones
      *
      * @return las funciones del lugar en objetos json DTO.
      * @throws BusinessLogicException
-     * 
-     * En caso de no existir el lugar con el id se retorna un 404 not
-     * found.
+     *
+     * En caso de no existir el lugar con el id se retorna un 404 not found.
      */
     @GET
     public List<FuncionDetailDTO> getFuncionesLugar(@PathParam("idLugar") Long id) throws BusinessLogicException {
-        LugarEntity l = lugarLogic.find(id);
-        if(l == null) {
-            throw new BusinessLogicException("No existe lugar con el id " + id);
-        }
-        List<FuncionDetailDTO> list = listEntity2DetailDTO(l.getFunciones());
-        return list;
+        List<FuncionEntity> getFunciones = lugarLogic.getFuncionesLugar(id);
+        return FuncionDetailDTO.listFuncionEntity2DetailDTO(getFunciones);
     }
-    
+
     /**
      * GET para una funcion especifica de un lugar especifico.
      * http://localhost:8080/nboletas-web/api/lugares/idLugar/funciones/idFuncion
      *
      * @return una funcion especifica del lugar en objeto json DTO.
      * @throws BusinessLogicException
-     * 
-     * En caso de no existir el id de la Funcion se retorna un 404 not
-     * found.
-     * 
-     * En caso de no existir el id del Lugar se retorna un 404 not
-     * found.
+     *
+     * En caso de no existir el id de la Funcion se retorna un 404 not found.
+     *
+     * En caso de no existir el id del Lugar se retorna un 404 not found.
      */
     @GET
     @Path("{idFuncion: \\d+}")
     public FuncionDetailDTO getFuncionLugar(@PathParam("idLugar") Long id, @PathParam("idFuncion") Long idFuncion) throws BusinessLogicException {
-        LugarEntity l = lugarLogic.find(id);
-        if(l == null) {
-            throw new BusinessLogicException("No existe lugar con el id " + id);
-        }
-        
-        List<FuncionEntity> funciones = l.getFunciones();
-        FuncionEntity funcion = null;
-        for(FuncionEntity f : funciones) if(f.getId().equals(idFuncion)) funcion = f;
-        
-        if(funcion == null) {
-            throw new BusinessLogicException("No existe funcion con el id " + idFuncion + " relacionada "
-                    + "con el lugar de id " + id);
-        }
-        return new FuncionDetailDTO(funcion);
+        FuncionEntity getFuncion = lugarLogic.getFuncionLugar(id, idFuncion);
+        return new FuncionDetailDTO(getFuncion);
     }
-    
+
     /**
      * POST para crear una relacion lugar funcion.
      * http://localhost:8080/nboletas-web/api/lugares/idLugar/funciones
      *
      * @param Funcion correponde a la representación java del objeto json
      * enviado en el llamado, para agregar la relacion al lugar.
-     * @return la funcion que fue creada para la relacion con el lugar en objeto json DTO.
+     * @return la funcion que fue creada para la relacion con el lugar en objeto
+     * json DTO.
      * @throws BusinessLogicExceptionfu
-     * 
-     * En caso de no existir el id del Lugar se retorna un 404 not
-     * found.
+     *
+     * En caso de no existir el id del Lugar se retorna un 404 not found.
      */
     @POST
     public FuncionDetailDTO createFuncionLugar(@PathParam("idLugar") Long id, FuncionDetailDTO funcion) throws BusinessLogicException {
-        LugarEntity l = lugarLogic.find(id);
-        if(l == null) {
-            throw new BusinessLogicException("No existe lugar con el id " + id);
-        }
-        
-        FuncionEntity f = funcion.toEntity();
-        f.setLugar(l);
-        f = funcionLogic.create(f);
-        return new FuncionDetailDTO(f);
+        FuncionEntity createFuncion = lugarLogic.createFuncionLugar(id, funcion.toEntity());
+        return new FuncionDetailDTO(createFuncion);
     }
-    
+
     /**
-     * PUT para crear una relacion funcion lugar con uno ya existente en el sistema.
+     * PUT para crear una relacion funcion lugar con uno ya existente en el
+     * sistema.
      * http://localhost:8080/nboletas-web/api/lugares/idLugar/funciones/idFuncion
      *
-     * @return la funcion que fue creada para la relacion con el lugar en objeto json DTO.
+     * @return la funcion que fue creada para la relacion con el lugar en objeto
+     * json DTO.
      * @throws BusinessLogicException
-     * 
-     * En caso de no existir el id de la Funcion se retorna un 404 not
-     * found.
-     * 
-     * En caso de no existir un Lugar con el id por parametro
-     * se returna un 404 not found.
+     *
+     * En caso de no existir el id de la Funcion se retorna un 404 not found.
+     *
+     * En caso de no existir un Lugar con el id por parametro se returna un 404
+     * not found.
      */
     @PUT
     @Path("{idFuncion: \\d+}")
     public FuncionDetailDTO updateFuncionLugar(@PathParam("idLugar") Long id, @PathParam("idFuncion") Long idFuncion) throws BusinessLogicException {
-        LugarEntity l = lugarLogic.find(id);
-        if(l == null) {
-            throw new BusinessLogicException("No existe lugar con el id " + id);
-        }
-        
-        FuncionEntity f = funcionLogic.find(idFuncion);
-        if(f == null) {
-            throw new BusinessLogicException("No existe una funcion con el id " + idFuncion);
-        }
-        
-        f.setLugar(l);
-        f = funcionLogic.update(f);
-        return new FuncionDetailDTO(f);
+        FuncionEntity updateFuncion = lugarLogic.updateFuncionLugar(id, idFuncion);
+        return new FuncionDetailDTO(updateFuncion);
     }
-    
+
     /**
-     * DELETE para eliminar una relacion funcion-lugar ya existente en el sistema.
+     * DELETE para eliminar una relacion funcion-lugar ya existente en el
+     * sistema.
      * http://localhost:8080/nboletas-web/api/lugares/idLugar/funciones/idFuncion
      *
-     * @return la funcion que fue creada para la relacion con el lugar en objeto json DTO.
+     * @return la funcion que fue creada para la relacion con el lugar en objeto
+     * json DTO.
      * @throws BusinessLogicException
-     * 
-     * En caso de no existir el id de la Funcion se retorna un 404 not
-     * found.
-     * 
+     *
+     * En caso de no existir el id de la Funcion se retorna un 404 not found.
+     *
      * En caso de no existir el id del Lugar se retorna un 404 not found.
      */
     @DELETE
     @Path("{idFuncion: \\d+}")
     public void deleteFuncionLugar(@PathParam("idLugar") Long id, @PathParam("idFuncion") Long idFuncion) throws BusinessLogicException {
-        LugarEntity l = lugarLogic.find(id);
-        if(l == null) {
-            throw new BusinessLogicException("No existe lugar con el id " + id);
-        }
-        
-        List<FuncionEntity> funciones = l.getFunciones();
-        FuncionEntity funcion = null;
-        for(FuncionEntity f : funciones) if(f.getId().equals(idFuncion)) funcion = f;
-        if(funcion == null) {
-            throw new BusinessLogicException("No existe una funcion con el id " + idFuncion + " relacionada "
-                    + "con el lugar de id " + id);
-        }
-        
-        funcion.setLugar(null);
-        funcion = funcionLogic.update(funcion);
-    }
-    
-    
-    
-    private List<FuncionDetailDTO> listEntity2DetailDTO(List<FuncionEntity> entityList) {
-        List<FuncionDetailDTO> list = new ArrayList<>();
-        for (FuncionEntity entity : entityList) {
-            list.add(new FuncionDetailDTO(entity));
-        }
-        return list;
+        lugarLogic.deleteFuncionLugar(id, idFuncion);
     }
 }

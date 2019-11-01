@@ -1,0 +1,22 @@
+<article class="post" ng-repeat="division in divisionesRecords">
+            <header>
+                <div class="title">
+                    <h2><a ui-sref="divisionesDetail({divisionId: division.id})">{{division.name}}</a></h2>
+                </div>
+            </header>
+            <a ui-sref="divisionesDetail({divisionId: division.id})" class="image featured"><img ng-src="{{division.imagen}}" alt="" /></a>
+            <footer>
+                <ul class="actions">
+                    <li><a ng-if="hasPermissions()" ui-sref="divisionesUpdate({divisionId: division.id})" class="button big">Actualizar</a></li>
+                    <li><a ng-if="hasPermissions()" ui-sref="divisionesDelete({divisionId: division.id})" class="button big">Borrar</a></li>
+                </ul>
+                <ul class="stats">
+                    <li><a href="#" class="icon fa-heart">28</a></li>
+                    <li><a href="#" class="icon fa-comment">128</a></li>
+                </ul>
+            </footer>
+	</article>
+	<!-- Pagination -->
+	<ul class="actions pagination" ng-if="hasPermissions()">
+            <li><a ui-sref="divisionesCreate" class="button big next">Agregar</a>
+	</ul>

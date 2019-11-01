@@ -1,0 +1,26 @@
+    <article class="post" ng-repeat="funcion in funcionesGetAll">
+        <header>
+            <div class="title">
+                <h2><a ui-sref="funcionesDetail({funcionId:funcion.id})">{{funcion.espectaculo.nombre + " - Funcion #" + funcion.id}}</a></h2>
+            </div>
+        </header>
+        <a ui-sref="funcionesDetail({funcionId:funcion.id})" class="image featured"><img ng-src="{{funcion.imagen}}" alt="" /></a>
+        <p>{{funcion.lugar.direccion}}</p>
+        <p>{{funcion.fecha | date}}</p>
+        <p>{{funcion.hora}}</p>
+        
+        <footer>
+            <ul class="actions">
+                <li><a ng-if="hasPermissions()" ui-sref="funcionesUpdate({funcionId: funcion.id})" class="button big">Actualizar</a></li>
+                <li><a ng-if="hasPermissions()" ui-sref="funcionesDelete({funcionId: funcion.id})" class="button big">Borrar</a></li>
+            </ul>
+            <ul class="stats">
+                <li><a href="#" class="icon fa-heart">28</a></li>
+                <li><a href="#" class="icon fa-comment">128</a></li>
+            </ul>
+        </footer>
+    </article>
+    <!-- Pagination -->
+    <ul class="actions pagination" ng-if="hasPermissions()">
+        <li><a ui-sref="funcionesCreate" class="button big next">Agregar</a>
+    </ul>

@@ -1,0 +1,24 @@
+[{"id": "0",
+    "precio": 20.23,
+    "vendida": 0,
+    "funcion_id": 1,
+    "silla_id": 0,
+    "usuario_id": 0
+},{
+    "id": "1",
+    "precio": 10.23,
+    "vendida": 1
+},{
+    "id": "2",
+    "precio": 30.01,
+    "vendida": 1
+},{
+    "id": "3",
+    "precio": 10.00,
+    "vendida": 1
+},{
+    "id": "4",
+    "precio": 55,
+    "vendida": 1
+}]
+

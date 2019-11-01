@@ -5,7 +5,12 @@
  */
 package co.edu.uniandes.theexceptions.nboletas.dtos;
 
+import co.edu.uniandes.theexceptions.nboletas.entities.ArtistaEntity;
+import co.edu.uniandes.theexceptions.nboletas.entities.ComentarioEntity;
 import co.edu.uniandes.theexceptions.nboletas.entities.EspectaculoEntity;
+import co.edu.uniandes.theexceptions.nboletas.entities.OrganizadorEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,8 +19,10 @@ import co.edu.uniandes.theexceptions.nboletas.entities.EspectaculoEntity;
 public class EspectaculoDTO {
 
     private Long id;
+    private String imagen;
     private String nombre;
     private String descripcion;
+
 
     /**
      * Constructor por defecto
@@ -30,9 +37,12 @@ public class EspectaculoDTO {
      * @param espectaculo: Es la entidad que se va a convertir a DTO
      */
     public EspectaculoDTO(EspectaculoEntity espectaculo) {
-        this.id = espectaculo.getId();
-        this.nombre = espectaculo.getNombre();
-        this.descripcion = espectaculo.getDescripcion();
+        if(espectaculo != null){
+            this.id = espectaculo.getId();
+            this.imagen=espectaculo.getImagen();
+            this.nombre = espectaculo.getNombre();
+            this.descripcion = espectaculo.getDescripcion();
+        }
     }
 
     /**
@@ -48,13 +58,21 @@ public class EspectaculoDTO {
     public void setId(Long id) {
         this.id = id;
     }
-
+  
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public String getDescripcion() {
@@ -72,6 +90,7 @@ public class EspectaculoDTO {
      */
     public EspectaculoEntity toEntity() {
         EspectaculoEntity entity = new EspectaculoEntity();
+        entity.setImagen(this.imagen);
         entity.setId(this.id);
         entity.setNombre(this.nombre);
         entity.setDescripcion(this.descripcion);

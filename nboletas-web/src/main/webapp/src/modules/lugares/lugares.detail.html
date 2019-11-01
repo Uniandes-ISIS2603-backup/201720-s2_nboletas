@@ -1,0 +1,48 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>{{currentLugar.direccion}}</h2>
+        </div>
+    </header>
+    <a class="image featured"><img ng-src="{{currentLugar.imagen}}" alt="" /></a>
+    <div class="col-md-3">
+        <dl>
+            <hr>
+            <dt>Ubicacion</dt>
+            <dd>{{currentLugar.ubicacion}}</dd>
+
+            <hr>
+            <dt>Tipo</dt>
+            <dd>{{currentLugar.tipo}}</dd>
+            <hr>
+            <dt>Divisiones de Lugar</dt>
+            <dd>
+                <ul>
+                    <li ng-if="divisionesLugar.length===0">
+                        <p><i>No hay divisiones asociadas</i></p>
+                    </li>
+                    <li ng-repeat="x in divisionesLugar">
+                        <a href="#!/divisiones/{{x.id}}/detail">{{"Division #" + x.id}}</a>
+                    </li>
+                </ul>
+            </dd>
+            <hr>
+            <dt>Funciones</dt>
+            <dd>
+                <ul>
+                    <li ng-if="funcionesLugar.length===0">
+                        <p><i>No hay funciones asociadas</i></p>
+                    </li>
+                    <li ng-repeat="x in funcionesLugar">
+                        <a href="#!/funciones/{{x.id}}/detail">{{x.espectaculo.nombre + " - Funcion #" + x.id}}</a>
+                    </li>
+                </ul>
+            </dd>
+    </div>
+    <footer>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>

@@ -12,7 +12,7 @@ import co.edu.uniandes.theexceptions.nboletas.entities.UsuarioEntity;
  * @author jm.contreras10
  */
 public class UsuarioDTO {
-    
+
     private Long id;
     private String userName;
     private String password;
@@ -20,29 +20,37 @@ public class UsuarioDTO {
     private String email;
     private String pais;
     private String ciudad;
+    private boolean admon;
+    private String imagen;
 
     public UsuarioDTO() {
     }
 
     public UsuarioDTO(UsuarioEntity entity) {
-        this.id = entity.getId();
-        this.userName = entity.getUserName();
-        this.password = entity.getPassword();
-        this.nombreUsuario = entity.getNombreUsuario();
-        this.email = entity.getEmail();
-        this.pais = entity.getPais();
-        this.ciudad = entity.getCiudad();
+        if (entity != null) {
+            this.id = entity.getId();
+            this.userName = entity.getUserName();
+            this.password = entity.getPassword();
+            this.nombreUsuario = entity.getNombreUsuario();
+            this.email = entity.getEmail();
+            this.pais = entity.getPais();
+            this.ciudad = entity.getCiudad();
+            this.admon = entity.getAdmon();
+            this.imagen = entity.getImagen();
+        }
     }
 
-    public UsuarioEntity toEntity() {
+    public UsuarioEntity toEntity(){
         UsuarioEntity entity = new UsuarioEntity();
-        entity.setId(id);
-        entity.setUserName(userName);
-        entity.setPassword(password);
-        entity.setNombreUsuario(nombreUsuario);
-        entity.setEmail(email);
-        entity.setPais(pais);
-        entity.setCiudad(ciudad);
+        entity.setId(this.id);
+        entity.setUserName(this.userName);
+        entity.setPassword(this.password);
+        entity.setNombreUsuario(this.nombreUsuario);
+        entity.setEmail(this.email);
+        entity.setPais(this.pais);
+        entity.setCiudad(this.ciudad);
+        entity.setAdmon(this.admon);
+        entity.setImagen(this.imagen);
         return entity;
     }
 
@@ -100,5 +108,21 @@ public class UsuarioDTO {
 
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
+    }
+    
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public boolean isAdmon() {
+        return admon;
+    }
+
+    public void setAdmon(boolean admon) {
+        this.admon = admon;
     }
 }

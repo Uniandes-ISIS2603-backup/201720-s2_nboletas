@@ -1,0 +1,47 @@
+<div class="panel panel-default"> 
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+
+            <div class="col-md-3">
+                <dl>
+                    <hr>
+                        <div class="thumb">
+                            <img src="{{currentUser.imagen}}" alt="logo" height="100" width="100"/></a>
+                        </div>
+                    <hr>
+                    <dt>Usuario</dt>
+                    <dd>{{currentUser.userName}}</dd>
+                    <hr>
+                    <dt>Nombre</dt>
+                    <dd>{{currentUser.nombreUsuario}}</dd>
+                    <hr>
+                    <dt>E-mail</dt>
+                    <dd>{{currentUser.email}}</dd>
+                    <hr>
+                    <dt>Pais</dt>
+                    <dd>{{currentUser.pais}}</dd>
+                    <hr>
+                    <dt>Ciudad</dt>
+                    <dd>{{currentUser.ciudad}}</dd>
+                    <hr>
+                    <dt>Boletas compradas</dt>
+                    <ul ng-repeat="boleta in currentUser.boletasCompradas">
+                        <dd><b>Boleta con id: </b>{{boleta.id}}</dd>
+                        <dd><b>Precio: </b>{{boleta.precio}}</dd>
+                        <button type="button" class="btn btn-info" ui-sref="boletaDetail({boletaId: boleta.id})" >Información</button>
+                    </ul>
+                    <hr>
+                    <dt>Opciones: </dt>
+                    <ul class="actions">
+                        <li><a ng-if="hasPermissions()" ui-sref="usuarioUpdate({usuarioId: currentUser  .id})" class="button big">Actualizar datos personales</a></li>
+                        <li><a ng-if="hasPermissions()" ui-sref="usuarioDelete({usuarioId: currentUser.id})" class="button big btn-info">Borrar cuenta</a></li>
+                    </ul>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,6 +23,8 @@ public class EspectaculoEntity extends BaseEntity implements Serializable {
     private String nombre;
 
     private String descripcion;
+    
+    private String imagen;
 
     @PodamExclude
     @ManyToMany(fetch = FetchType.LAZY)
@@ -46,6 +48,14 @@ public class EspectaculoEntity extends BaseEntity implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public String getDescripcion() {

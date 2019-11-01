@@ -1,0 +1,29 @@
+<article class="post">
+<form ng-submit="createBoleta()" name="boleta">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="boletaPrecio" class="col-sm-2">Precio:</label>
+                            <input id="boletaPrecio" required ng-model="boletaPrecio" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="boletaVendida" class="col-sm-2">¿Esta Vendida?</label>
+                            <textarea id="boletaVendida" required ng-model="boletaVendida" class="col-sm-6"></textarea>
+                        </div>
+                    </div>
+                   <div class="form-group row">
+                        <div class="form-group col-sm-4" ng-if="!boleta.$valid">
+                            <div class="alert alert-warning">
+                                <strong>Warning!</strong><p>All inputs are required*</p>
+                            </div> 
+                        </div> 
+                    </div> 
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-show="boleta.$valid" type="submit" value="Guardar" class="button big"/>
+                            <a class="button big" ui-sref="boletasList">Cancel</a>
+                        </div>
+                    </div>
+</form>
+</article>

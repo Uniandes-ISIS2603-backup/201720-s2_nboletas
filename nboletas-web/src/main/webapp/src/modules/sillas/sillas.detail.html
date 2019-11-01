@@ -1,0 +1,39 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>{{currentSilla.id}}</h2>
+        </div>
+    </header>
+   <div class="col-md-3">
+            <dl> 
+                
+                <hr>
+                <dt>ID</dt>
+                <dt>{{currentSilla.id}}</dt>
+                
+                <hr>
+                <dt>Costo</dt>
+                <dd>{{currentSilla.costo}}</dd>
+          
+                <hr>
+                <dt>Boletas</dt>
+                <dd>
+                <ul>
+                    <li ng-repeat="x in currentSilla.boletas">
+                        <a href="#!/boletas/{{x.id}}/detail">{{x.id}}</a>
+                    </li>
+                </ul>
+            </dd>
+            
+            
+            
+            </dl>
+        </div>
+    <a class="image featured"><img ng-src="{{currentSilla.imagen}}" alt="" /></a>
+    <footer>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>

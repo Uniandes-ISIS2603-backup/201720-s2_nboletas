@@ -6,8 +6,10 @@
 package co.edu.uniandes.theexceptions.nboletas.persistence;
 
 import co.edu.uniandes.theexceptions.nboletas.entities.FuncionEntity;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,6 +34,8 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class FuncionPersistenceTest {
+    
+    private static final Logger LOGGER = Logger.getLogger(FuncionPersistenceTest.class.getName());
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -103,6 +107,7 @@ public class FuncionPersistenceTest {
     public void testCreate() {
         PodamFactory factory = new PodamFactoryImpl();
         FuncionEntity newEntity = factory.manufacturePojo(FuncionEntity.class);
+        newEntity.setHora("8:00 pm");
         FuncionEntity result = persistence.create(newEntity);
         Assert.assertNotNull(result);
         FuncionEntity entity = em.find(FuncionEntity.class, result.getId());
@@ -116,12 +121,14 @@ public class FuncionPersistenceTest {
     @Test
     public void testUpdate() {
         FuncionEntity entity = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
-        FuncionEntity newEntity = factory.manufacturePojo(FuncionEntity.class);
-        newEntity.setId(entity.getId());
-        persistence.update(newEntity);
+        try {
+            entity.setFecha((new SimpleDateFormat("MM/dd/yyyy")).parse("08/31/1998"));
+        } catch (Exception e) { }
+        entity.setHora("9:00 pm");
+        persistence.update(entity);
         FuncionEntity resp = em.find(FuncionEntity.class, entity.getId());
-        Assert.assertEquals(newEntity.getId(), resp.getId());
+        Assert.assertEquals("08/31/1998", (new SimpleDateFormat("MM/dd/yyyy")).format(resp.getFecha()));
+        Assert.assertEquals(entity.getId(), resp.getId());
     }
 
     /**

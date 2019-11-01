@@ -1,0 +1,51 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>{{"Boleta #" + currentBoleta.id}}</h2>
+        </div>
+    </header>
+    <a class="image featured"><img ng-src="{{currentBoleta.imagen}}" alt="" /></a>
+    <div class="col-md-3">
+        <dl> 
+
+            <hr>
+            <dt>Precio</dt>
+            <dd>{{currentBoleta.precio| currency}}</dd>
+
+            <hr>
+            <dt>¿Esta Vendida?</dt>
+            <dd>{{currentBoleta.vendida}}</dd>
+
+            <hr>
+            <dt>Nombre Del Usuario</dt>
+            <dd><a ui-sref="usuarioDetail({usuarioId: currentBoleta.usuario.id})">{{currentBoleta.usuario.userName}}</a></dd>
+
+            <hr>
+            <dt>Reembolso</dt>
+            <dd><a ui-sref="reembolsoDetail({reembolsoId: currentBoleta.reembolso.id})">{{currentBoleta.reembolso.id}}</a></dd>
+
+            <hr>
+            <dt>Envio</dt>
+            <dd><a ui-sref="envioDetail({envioId: currentBoleta.envio.id})">{{currentBoleta.envio.id}}</a></dd>
+
+            <hr>
+            <dt>Funcion</dt>
+            <dd><a ui-sref="funcionDetail({funcionId: currentBoleta.funcion.id})">{{currentBoleta.funcion.id}}</a></dd>
+
+            <hr>
+            <dt>Silla</dt>
+            <dd><a ui-sref="sillasDetail({sillaId: currentBoleta.silla.id})">{{currentBoleta.silla.id}}</a></dd>
+
+            <hr>
+            <dt>Comentario</dt>
+            <dd><a ui-sref="comentarioDetail({comentarioId: currentBoleta.comentario.id})">{{currentBoleta.comentario.id}}</a></dd>
+        </dl>
+    </div>
+    <footer>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>
+

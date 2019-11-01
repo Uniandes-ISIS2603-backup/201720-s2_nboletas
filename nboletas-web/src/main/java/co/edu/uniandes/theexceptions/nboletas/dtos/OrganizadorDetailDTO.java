@@ -7,7 +7,6 @@ package co.edu.uniandes.theexceptions.nboletas.dtos;
 
 import co.edu.uniandes.theexceptions.nboletas.entities.EspectaculoEntity;
 import co.edu.uniandes.theexceptions.nboletas.entities.OrganizadorEntity;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +14,8 @@ import java.util.List;
  *
  * @author df.riveros11
  */
-public class OrganizadorDetailDTO extends OrganizadorDTO{
-    
+public class OrganizadorDetailDTO extends OrganizadorDTO {
+
     private List<EspectaculoDTO> espectaculos;
 
     public OrganizadorDetailDTO() {
@@ -25,10 +24,12 @@ public class OrganizadorDetailDTO extends OrganizadorDTO{
 
     public OrganizadorDetailDTO(OrganizadorEntity entity) {
         super(entity);
-        if (entity.getEspectaculos() != null) {
-            espectaculos = new ArrayList<>();
-            for (EspectaculoEntity espectaculo : entity.getEspectaculos()) {
-                espectaculos.add(new EspectaculoDTO(espectaculo));
+        if (entity != null) {
+            if (entity.getEspectaculos() != null) {
+                espectaculos = new ArrayList<>();
+                for (EspectaculoEntity espectaculo : entity.getEspectaculos()) {
+                    espectaculos.add(new EspectaculoDTO(espectaculo));
+                }
             }
         }
     }
@@ -44,5 +45,21 @@ public class OrganizadorDetailDTO extends OrganizadorDTO{
             entity.setEspectaculos(espectaculosEntity);
         }
         return entity;
+    }
+
+    public static List<OrganizadorDetailDTO> listOrganizadorEntity2OrganizadorDetailDTO(List<OrganizadorEntity> entityList) {
+        List<OrganizadorDetailDTO> list = new ArrayList<>();
+        for (OrganizadorEntity entity : entityList) {
+            list.add(new OrganizadorDetailDTO(entity));
+        }
+        return list;
+    }
+
+    public static List<OrganizadorEntity> listBoletaDetailDTO2BoletaEntity(List<OrganizadorDetailDTO> detailDtoList) {
+        List<OrganizadorEntity> list = new ArrayList<>();
+        for (OrganizadorDetailDTO detail : detailDtoList) {
+            list.add(detail.toEntity());
+        }
+        return list;
     }
 }

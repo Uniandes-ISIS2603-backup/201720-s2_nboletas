@@ -1,0 +1,23 @@
+  <article class="post" ng-repeat="lugar in lugaresGetAll">
+        <header>
+            <div class="title">
+                <h2><a ui-sref="lugaresDetail({lugarId: lugar.id})">{{lugar.direccion}}</a></h2>
+            </div>
+        </header>
+        <a ui-sref="lugaresDetail({lugarId: lugar.id})" class="image featured"><img ng-src="{{lugar.imagen}}" alt="" /></a>
+        <p>{{lugar.ubicacion}}</p>
+        <footer>
+            <ul class="actions">
+                <li><a ng-if="hasPermissions()" ui-sref="lugaresUpdate({lugarId: lugar.id})" class="button big">Actualizar</a></li>
+                <li><a ng-if="hasPermissions()" ui-sref="lugaresDelete({lugarId: lugar.id})" class="button big">Borrar</a></li>
+            </ul>
+            <ul class="stats">
+                <li><a href="#" class="icon fa-heart">28</a></li>
+                <li><a href="#" class="icon fa-comment">128</a></li>
+            </ul>
+        </footer>
+    </article>
+    <!-- Pagination -->
+    <ul class="actions pagination" ng-if="hasPermissions()">
+        <li><a ui-sref="lugaresCreate" class="button big next">Agregar</a>
+    </ul>

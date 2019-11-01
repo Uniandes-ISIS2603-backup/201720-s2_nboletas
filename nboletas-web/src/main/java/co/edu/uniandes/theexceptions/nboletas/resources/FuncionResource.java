@@ -45,7 +45,8 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @Stateless
 public class FuncionResource {
-@Inject
+
+    @Inject
     private FuncionLogic funcionLogic;
 
     private static final Logger LOGGER = Logger.getLogger(FuncionResource.class.getName());
@@ -59,7 +60,7 @@ public class FuncionResource {
      */
     @GET
     public List<FuncionDetailDTO> getFunciones() throws BusinessLogicException {
-        return listEntity2DetailDTO(funcionLogic.findAll());
+        return FuncionDetailDTO.listFuncionEntity2DetailDTO(funcionLogic.findAll());
     }
 
     /**
@@ -69,8 +70,7 @@ public class FuncionResource {
      * @return la lista de todas las Funciones en objetos json DTO.
      * @throws WebApplicationException
      *
-     * En caso de no existir el id de la Funcion se retorna un 404
-     * not found.
+     * En caso de no existir el id de la Funcion se retorna un 404 not found.
      */
     @GET
     @Path("{id: \\d+}")
@@ -81,7 +81,7 @@ public class FuncionResource {
         }
         return new FuncionDetailDTO(f);
     }
-    
+
     /**
      * GET para el espectaculo de una funcion.
      * http://localhost:8080/nboletas-web/api/funciones/id
@@ -89,11 +89,10 @@ public class FuncionResource {
      * @return 0 de todas las Funciones en objetos json DTO.
      * @throws WebApplicationException
      *
-     * En caso de no existir el id de la Funcion se retorna un 404
-     * not found.
-     * 
-     * En caso de no existir espectaculo para la funcion se retorna un 404
-     * not found.
+     * En caso de no existir el id de la Funcion se retorna un 404 not found.
+     *
+     * En caso de no existir espectaculo para la funcion se retorna un 404 not
+     * found.
      */
     @GET
     @Path("{id: \\d+}/espectaculo")
@@ -103,10 +102,12 @@ public class FuncionResource {
             throw new WebApplicationException("No existe funcion con id " + id, 404);
         }
         EspectaculoEntity espectaculo = f.getEspectaculo();
-        if(espectaculo == null)  throw new WebApplicationException("La funcion con id " + id + " no tiene espectaculo asignado", 404);
+        if (espectaculo == null) {
+            throw new WebApplicationException("La funcion con id " + id + " no tiene espectaculo asignado", 404);
+        }
         return new EspectaculoDetailDTO(espectaculo);
     }
-    
+
     /**
      * GET para el lugar de una funcion.
      * http://localhost:8080/nboletas-web/api/funciones/id
@@ -114,11 +115,9 @@ public class FuncionResource {
      * @return la lista de todas las Funciones en objetos json DTO.
      * @throws WebApplicationException
      *
-     * En caso de no existir el id de la Funcion se retorna un 404
-     * not found.
-     * 
-     * En caso de no existir lugar para la funcion se retorna un 404
-     * not found.
+     * En caso de no existir el id de la Funcion se retorna un 404 not found.
+     *
+     * En caso de no existir lugar para la funcion se retorna un 404 not found.
      */
     @GET
     @Path("{id: \\d+}/lugar")
@@ -128,10 +127,12 @@ public class FuncionResource {
             throw new WebApplicationException("No existe funcion con id " + id, 404);
         }
         LugarEntity lugar = f.getLugar();
-        if(lugar == null)  throw new WebApplicationException("La funcion con id " + id + " no tiene lugar asignado", 404);
+        if (lugar == null) {
+            throw new WebApplicationException("La funcion con id " + id + " no tiene lugar asignado", 404);
+        }
         return new LugarDetailDTO(lugar);
     }
-   
+
     /**
      * POST http://localhost:8080/nboletas-web/api/funciones
      *
@@ -192,13 +193,5 @@ public class FuncionResource {
             throw new BusinessLogicException("No existe funcion con el id: " + id);
         }
         funcionLogic.delete(f);
-    }
-
-    private List<FuncionDetailDTO> listEntity2DetailDTO(List<FuncionEntity> entityList) {
-        List<FuncionDetailDTO> list = new ArrayList<>();
-        for (FuncionEntity entity : entityList) {
-            list.add(new FuncionDetailDTO(entity));
-        }
-        return list;
     }
 }

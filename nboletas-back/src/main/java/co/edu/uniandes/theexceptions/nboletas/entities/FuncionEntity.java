@@ -27,6 +27,10 @@ public class FuncionEntity extends BaseEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fecha;
 
+    private String hora;
+    
+    private String imagen;
+
     @PodamExclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "funcion")
     private List<BoletaEntity> boletas;
@@ -94,4 +98,34 @@ public class FuncionEntity extends BaseEntity implements Serializable {
     public void setLugar(LugarEntity lugar) {
         this.lugar = lugar;
     }
+
+    /**
+     * @return the hora
+     */
+    public String getHora() {
+        return hora;
+    }
+
+    /**
+     * @param hora the hora to set
+     */
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
+    
 }

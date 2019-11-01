@@ -1,8 +1,10 @@
 package co.edu.uniandes.theexceptions.nboletas.persistence;
 
 import co.edu.uniandes.theexceptions.nboletas.entities.ReembolsoEntity;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +29,8 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class ReembolsoPersistenceTest {
+    
+    private static final Logger LOGGER = Logger.getLogger(ReembolsoPersistenceTest.class.getName());
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -59,9 +63,9 @@ public class ReembolsoPersistenceTest {
     UserTransaction utx;
 
     /**
-     *
+     * Estructura de datos que contiene la informacion a probar.
      */
-    private List<ReembolsoEntity> data = new LinkedList<ReembolsoEntity>();
+    private List<ReembolsoEntity> data = new ArrayList<ReembolsoEntity>();
 
     public ReembolsoPersistenceTest() {
     }
@@ -101,6 +105,8 @@ public class ReembolsoPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             ReembolsoEntity entity = factory.manufacturePojo(ReembolsoEntity.class);
+            LOGGER.info(entity.getValor() + " valor");
+            LOGGER.info(entity.getId() + " id");
             em.persist(entity);
             data.add(entity);
         }
@@ -145,7 +151,6 @@ public class ReembolsoPersistenceTest {
         Assert.assertEquals(newEntity.getUsuario().getId(), entity.getUsuario().getId());
         Assert.assertEquals(newEntity.getBoleta().getId(), entity.getBoleta().getId());
          */
-
     }
 
     /**
@@ -173,7 +178,6 @@ public class ReembolsoPersistenceTest {
         Assert.assertEquals(newEntity.getUsuario().getId(), entity.getUsuario().getId());
         Assert.assertEquals(newEntity.getBoleta().getId(), entity.getBoleta().getId());
          */
-
     }
 
     /**

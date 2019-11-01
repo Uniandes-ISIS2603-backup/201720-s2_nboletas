@@ -1,0 +1,34 @@
+<article class="post">
+    <form ng-submit="updateComentario()" name="comentario">
+
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="comentarioComentario" class="col-sm-2">Comentario</label>
+                <input id="comentarioComentario" required ng-model="comentario.comentario" class="col-sm-6"/>
+            </div>
+        </div>
+
+
+
+        <!--    <div class="form-group row">
+                <div class="form-group col-md-6">
+                    <label for="comentarioFecha" class="col-sm-2">fecha:</label>
+                    <input type="Date" id="comentarioFecha" required ng-model="comentario.fecha" class="col-sm-6"/>
+                </div>
+            </div>-->
+
+        <div class="form-group row">
+            <div class="form-group col-sm-4" ng-if="!comentario.$valid">
+                <div class="alert alert-warning">
+                    <strong>Advertencia!</strong><p>Es necesario llenar los campos*</p>
+                </div> 
+            </div> 
+        </div> 
+        <div class="form-group row">
+            <div class="form-group col-sm-12">
+                <input ng-show="comentario.$valid" type="submit" value="Guardar" class="button big"/>
+                <button class="button big" ui-sref="comentariosList">Cancelar</button>
+            </div>
+        </div>
+    </form>
+</article>

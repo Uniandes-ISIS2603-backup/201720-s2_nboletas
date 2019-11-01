@@ -6,6 +6,9 @@
 package co.edu.uniandes.theexceptions.nboletas.dtos;
 
 import co.edu.uniandes.theexceptions.nboletas.entities.ArtistaEntity;
+import co.edu.uniandes.theexceptions.nboletas.entities.EspectaculoEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,7 +16,9 @@ import co.edu.uniandes.theexceptions.nboletas.entities.ArtistaEntity;
  */
 public class ArtistaDetailDTO extends ArtistaDTO {
     
-        /**
+    List <EspectaculoDTO> espectaculos;
+
+    /**
      * Constructor por defecto
      */
     public ArtistaDetailDTO() {
@@ -26,6 +31,21 @@ public class ArtistaDetailDTO extends ArtistaDTO {
      */
     public ArtistaDetailDTO(ArtistaEntity entity) {
         super(entity);
+        espectaculos=new ArrayList<>();
+        if(entity.getEspectaculos()!=null){
+        for(EspectaculoEntity espec: entity.getEspectaculos()){
+            EspectaculoDTO dto=new EspectaculoDTO(espec);
+            espectaculos.add(dto);
+        }
+        }
+    }
+
+    public List<EspectaculoDTO> getEspectaculos() {
+        return espectaculos;
+    }
+
+    public void setEspectaculos(List<EspectaculoDTO> espectaculos) {
+        this.espectaculos = espectaculos;
     }
 
     /**
@@ -38,5 +58,5 @@ public class ArtistaDetailDTO extends ArtistaDTO {
         ArtistaEntity BoletaE = super.toEntity();
         return BoletaE;
     }
-    
+
 }

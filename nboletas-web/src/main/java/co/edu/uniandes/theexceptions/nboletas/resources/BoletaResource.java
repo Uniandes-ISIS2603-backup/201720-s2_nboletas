@@ -29,12 +29,11 @@ import co.edu.uniandes.theexceptions.nboletas.dtos.FuncionDetailDTO;
 import co.edu.uniandes.theexceptions.nboletas.dtos.SillaDetailDTO;
 import co.edu.uniandes.theexceptions.nboletas.dtos.UsuarioDetailDTO;
 import co.edu.uniandes.theexceptions.nboletas.entities.BoletaEntity;
-import co.edu.uniandes.theexceptions.nboletas.entities.FuncionEntity;
 import co.edu.uniandes.theexceptions.nboletas.exceptions.BusinessLogicException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -71,12 +70,11 @@ public class BoletaResource {
      * @return Devuelve el objeto json de entrada que contiene el id creado por
      * la base de datos y el tipo del objeto java. Ejemplo: { "type":
      * "BoletaDetailDTO", "id": 1, atributo1 : "valor" }
-     * @throws BusinessLogicException
      */
     @POST
-    public BoletaDetailDTO createBoleta(BoletaDetailDTO Boleta) throws BusinessLogicException {
-        BoletaEntity boleta = Boleta.toEntity();
-        return new BoletaDetailDTO(boletaLogic.create(boleta));
+    public BoletaDetailDTO createBoleta(BoletaDetailDTO Boleta) {
+        BoletaEntity boleta = boletaLogic.create(Boleta.toEntity());
+        return new BoletaDetailDTO(boleta);
     }
 
     /**
@@ -84,19 +82,18 @@ public class BoletaResource {
      * http://localhost:8080/nboletas-web/api/boletas
      *
      * @return la lista de todas las Boletas en objetos json DTO.
-     * @throws BusinessLogicException
      */
     @GET
-    public List<BoletaDetailDTO> getBoletas() throws BusinessLogicException {
-        return listEntity2DetailDTO(boletaLogic.findAll());
+    public List<BoletaDetailDTO> getBoletas() {
+        return BoletaDetailDTO.listBoletaEntity2BoletaDetailDTO(boletaLogic.findAll());
     }
 
     @GET
     @Path("{id: \\d+}")
-    public BoletaDetailDTO getBoleta(@PathParam("id") Long id) throws BusinessLogicException {
+    public BoletaDetailDTO getBoleta(@PathParam("id") Long id) throws BusinessLogicException, PersistenceException {
         BoletaEntity boleta = boletaLogic.find(id);
         if (boleta == null) {
-            throw new BusinessLogicException("No existe la boleta con el id: " + id);
+            throw new BusinessLogicException("No se encontra la boleta con el id: " + id);
         }
         return new BoletaDetailDTO(boleta);
     }
@@ -116,12 +113,12 @@ public class BoletaResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public BoletaDetailDTO updateBoleta(@PathParam("id") Long id, BoletaDetailDTO boleta) throws BusinessLogicException, UnsupportedOperationException {
+    public BoletaDetailDTO updateBoleta(@PathParam("id") Long id, BoletaDetailDTO boleta) throws BusinessLogicException {
         boleta.setId(id);
         if (null == boletaLogic.find(id)) {
             throw new BusinessLogicException("No existe la boleta con el id: " + id);
         }
-        BoletaEntity boletaActualizada = boletaLogic.update(boleta.toEntity());
+        BoletaEntity boletaActualizada =  boletaLogic.update(boleta.toEntity());
         return (new BoletaDetailDTO(boletaActualizada));
     }
 
@@ -143,47 +140,38 @@ public class BoletaResource {
         if (null == boleta) {
             throw new BusinessLogicException("No existe la boleta con el id: " + id);
         }
-        boletaLogic.delete(boleta);
-    }
-
-    /**
-     *
-     * lista de entidades a DTO.
-     *
-     * Este método convierte una lista de objetos BoletaEntity a una lista de
-     * objetos BoletaDetailDTO (json)
-     *
-     * @param entityList corresponde a la lista de Boletas de tipo Entity que
-     * vamos a convertir a DTO.
-     * @return la lista de Boletas en forma DTO (json)
-     */
-    private List<BoletaDetailDTO> listEntity2DetailDTO(List<BoletaEntity> entityList) {
-        List<BoletaDetailDTO> list = new ArrayList<>();
-        for (BoletaEntity entity : entityList) {
-            list.add(new BoletaDetailDTO(entity));
-        }
-        return list;
+            boletaLogic.delete(boleta);
+       
     }
 
     @GET
     @Path("{id: \\d+}/usuarios")
     public UsuarioDetailDTO getUsuario(@PathParam("id") Long id) throws BusinessLogicException {
-       BoletaEntity boleta = boletaLogic.find(id);
-       return new  UsuarioDetailDTO(boleta.getUsuario());
+        BoletaEntity boleta = boletaLogic.find(id);
+        if (boleta == null) {
+            throw new BusinessLogicException("No se encontra la boleta con el id: " + id);
+        }
+        return new UsuarioDetailDTO(boleta.getUsuario());
     }
-    
+
     @GET
     @Path("{id: \\d+}/sillas")
     public SillaDetailDTO getSilla(@PathParam("id") Long id) throws BusinessLogicException {
-       BoletaEntity boleta = boletaLogic.find(id);
-       return new  SillaDetailDTO(boleta.getSilla());
+        BoletaEntity boleta = boletaLogic.find(id);
+        if (boleta == null) {
+            throw new BusinessLogicException("No se encontra la boleta con el id: " + id);
+        }
+        return new SillaDetailDTO(boleta.getSilla());
     }
-    
+
     @GET
     @Path("{id: \\d+}/funciones")
     public FuncionDetailDTO getFuncion(@PathParam("id") Long id) throws BusinessLogicException {
-       BoletaEntity boleta = boletaLogic.find(id);
-       return new  FuncionDetailDTO(boleta.getFuncion());
+        BoletaEntity boleta = boletaLogic.find(id);
+        if (boleta == null) {
+            throw new BusinessLogicException("No se encontra la boleta con el id: " + id);
+        }
+        return new FuncionDetailDTO(boleta.getFuncion());
     }
-    
+
 }

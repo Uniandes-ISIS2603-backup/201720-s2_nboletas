@@ -1,0 +1,8 @@
+<li ng-repeat="artista in artistasRecords">
+    <article>
+        <header>
+            <h3>{{artista.nombre}}</h3>
+        </header>
+        <a ui-sref="artistaDetail({artistaId: artista.id})"class="image"><img src="{{artista.imagen}}" alt="" /></a>
+    </article>
+</li>

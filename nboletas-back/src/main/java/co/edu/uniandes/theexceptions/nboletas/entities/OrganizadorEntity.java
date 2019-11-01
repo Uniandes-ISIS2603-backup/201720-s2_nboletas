@@ -10,6 +10,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class OrganizadorEntity extends BaseEntity implements Serializable {
 
     private String nombreEmpresa;
+    private String imagen;
 
     @PodamExclude
     @ManyToMany(mappedBy = "organizador")
@@ -29,5 +30,13 @@ public class OrganizadorEntity extends BaseEntity implements Serializable {
 
     public void setEspectaculos(List<EspectaculoEntity> espectaculos) {
         this.espectaculos = espectaculos;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

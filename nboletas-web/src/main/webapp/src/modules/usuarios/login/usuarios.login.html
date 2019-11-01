@@ -1,0 +1,16 @@
+<div class="h-100 row align-items-center center-block">
+    <div class="alert alert-warning" ng-show="loginFailed">
+        <p>{{status}}</p>
+    </div>
+    <div>
+        <form ng-submit="autenticar()" class="form-signin" name="sign">
+            <h2 class="form-signin-heading">Ingresar</h2>
+                <input type="text" class="form-control" placeholder="Usuario" required="" autofocus="" ng-model="username"/>
+                <input type="password" class="form-control" placeholder="Contraseña" required="" ng-model="password"/>  
+                <hr>
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Ingresar</button>
+                <br>
+                <a ui-sref="espectaculosList">Cancelar</a>
+        </form>
+    </div>
+</div>

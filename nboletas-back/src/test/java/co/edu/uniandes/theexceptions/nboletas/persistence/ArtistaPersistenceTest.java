@@ -33,7 +33,6 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class ArtistaPersistenceTest {
-    
 
     @Deployment
     public static JavaArchive createDeployment() {

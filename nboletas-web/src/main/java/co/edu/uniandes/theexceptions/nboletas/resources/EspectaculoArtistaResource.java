@@ -29,7 +29,6 @@ import javax.ws.rs.Produces;
  *
  * @author jf.ramos
  */
-
 @Path("espectaculos/{idEspectaculo: \\d+}/artistas")
 @Produces("application/json")
 @Consumes("application/json")
@@ -39,17 +38,21 @@ public class EspectaculoArtistaResource {
     @Inject
     ArtistaLogic artistaLogic;
 
-@Inject
+    @Inject
     EspectaculoLogic espectaculoLogic;
-
+    
+    
     @POST
     public ArtistaDetailDTO createEspectaculoArtista(@PathParam("idEspectaculo") Long idEspectaculo, ArtistaDetailDTO artista) throws BusinessLogicException {
         EspectaculoEntity espectaculo = espectaculoLogic.find(idEspectaculo);
         if (espectaculo == null) {
             throw new BusinessLogicException("No existe el espectaculo con el id: " + idEspectaculo);
         }
-        ArtistaEntity artistaE = artista.toEntity();
-        List<ArtistaEntity> artistas = new ArrayList<>();
+        ArtistaEntity artistaE = artistaLogic.find(artista.getId());
+        List <EspectaculoEntity> lista= new ArrayList<>();
+        lista.add(espectaculo);
+        List<ArtistaEntity> artistas = espectaculo.getArtista();
+        artistaE.setEspectaculos(lista);
         artistas.add(artistaE);
         espectaculo.setArtista(artistas);
         ArtistaEntity artistaCreado = artistaLogic.create(artistaE);
@@ -83,17 +86,21 @@ public class EspectaculoArtistaResource {
         if (artista == null) {
             throw new BusinessLogicException("No existe el artista con ese id: " + idArtista);
         }
+        List<ArtistaEntity> artistasE=espectaculo.getArtista();
+        if(!artistasE.contains(artista)){
+            throw new BusinessLogicException("El espectaculo no está asociado al artista con id: " + idArtista);
+        }
         return new ArtistaDetailDTO(artista);
     }
 
     @PUT
     @Path("{idArtista: \\d+}")
-    public ArtistaDetailDTO updateEspectaculoArtista(@PathParam("idEspectaculo") Long idEspectaculo, @PathParam("idArtista") Long idArtista, ArtistaDetailDTO artista ) throws BusinessLogicException {
+    public ArtistaDetailDTO updateEspectaculoArtista(@PathParam("idEspectaculo") Long idEspectaculo, @PathParam("idArtista") Long idArtista, ArtistaDetailDTO artista) throws BusinessLogicException {
         EspectaculoEntity espectaculo = espectaculoLogic.find(idEspectaculo);
         if (espectaculo == null) {
             throw new BusinessLogicException("No existe el espectaculo con ese id: " + idEspectaculo);
         }
-        if (null == espectaculoLogic.find(idArtista)) {
+        if (null == artistaLogic.find(idArtista)) {
             throw new BusinessLogicException("No existe el artista con ese id: " + idArtista);
         }
         ArtistaEntity artistaActualizar = artista.toEntity();
@@ -101,7 +108,7 @@ public class EspectaculoArtistaResource {
         espectaculos.add(espectaculo);
         artistaActualizar.setEspectaculos(espectaculos);
         artistaActualizar.setId(idArtista);
-        ArtistaEntity actual =artistaLogic.update(artistaActualizar);
+        ArtistaEntity actual = artistaLogic.update(artistaActualizar);
         return new ArtistaDetailDTO(actual);
     }
 
@@ -116,7 +123,7 @@ public class EspectaculoArtistaResource {
         if (artista == null) {
             throw new BusinessLogicException("No existe el artista con ese id: " + idArtista);
         }
-        List<EspectaculoEntity> espectaculos= new ArrayList<>();
+        List<EspectaculoEntity> espectaculos = new ArrayList<>();
         espectaculos.add(espectaculo);
         artista.setEspectaculos(espectaculos);
         artistaLogic.delete(artista);

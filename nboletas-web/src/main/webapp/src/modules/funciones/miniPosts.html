@@ -1,0 +1,8 @@
+<!-- Mini Post -->
+<article class="mini-post" ng-repeat="funcion in funcionesGetAll">
+    <header>
+        <time class="published" >{{funcion.fecha | date}}</time>
+    </header>
+    <a ui-sref="funcionesDetail({funcionId:funcion.id})" class="image"><img ng-src="{{funcion.imagen}}" alt="" /></a>
+</article>
+

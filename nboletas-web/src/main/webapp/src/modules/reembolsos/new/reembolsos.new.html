@@ -1,0 +1,23 @@
+<article class="post">
+<form ng-submit="createReembolso()" name="reembolso">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="reembolso.valor" class="col-sm-2">Valor</label>
+                            <input id="reembolso.valor" required ng-model="reembolso.valor" class="col-sm-6"/>
+                        </div>
+                    </div>
+                   <div class="form-group row">
+                        <div class="form-group col-sm-4" ng-if="!reembolso.$valid">
+                            <div class="alert alert-warning">
+                                <strong>Warning!</strong><p>All inputs are required*</p>
+                            </div> 
+                        </div> 
+                    </div> 
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-show="reembolso.$valid" type="submit" value="Guardar" class="button big"/>
+                            <a class="button big" ui-sref="reembolsosList">Cancelar</a>
+                        </div>
+                    </div>
+</form>
+</article>

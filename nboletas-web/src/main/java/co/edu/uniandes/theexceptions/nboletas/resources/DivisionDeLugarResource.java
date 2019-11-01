@@ -27,13 +27,9 @@ import javax.ws.rs.*;
 public class DivisionDeLugarResource {
 
     @Inject
-    DivisionDeLugarLogic divisionDeLugarLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+    DivisionDeLugarLogic divisionDeLugarLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias
 
-    @Inject
-    LugarLogic lugarLogic;
-            
-    
-    private static final Logger LOGGER = Logger.getLogger(DivisionDeLugarResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DivisionDeLugarResource.class.getName()); 
 
     /**
      * POST http://localhost:8080/nboletas-web/api/divisiones
@@ -47,7 +43,7 @@ public class DivisionDeLugarResource {
      */
     @POST
     public DivisionDeLugarDetailDTO createDivision(DivisionDeLugarDetailDTO division) throws BusinessLogicException {
-        
+
         // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
         DivisionDeLugarEntity divisionEntity = division.toEntity();
         // Invoca la lógica para crear la Boleta nueva
@@ -65,9 +61,9 @@ public class DivisionDeLugarResource {
      */
     @GET
     public List<DivisionDeLugarDetailDTO> getDivisiones() throws BusinessLogicException {
-        return listEntity2DetailDTO(divisionDeLugarLogic.findAll());
+        return DivisionDeLugarDetailDTO.listBoletaEntity2BoletaDetailDTO(divisionDeLugarLogic.findAll()); 
     }
-    
+
     @GET
     @Path("{id: \\d+}")
     public DivisionDeLugarDetailDTO getDivision(@PathParam("id") Long id) throws BusinessLogicException {
@@ -123,23 +119,13 @@ public class DivisionDeLugarResource {
         divisionDeLugarLogic.delete(division);
     }
 
-    /**
-     *
-     * lista de entidades a DTO.
-     *
-     * Este método convierte una lista de objetos BoletaEntity a una lista de
-     * objetos BoletaDetailDTO (json)
-     *
-     * @param entityList corresponde a la lista de Boletas de tipo Entity que
-     * vamos a convertir a DTO.
-     * @return la lista de Boletas en forma DTO (json)
-     */
-    private List<DivisionDeLugarDetailDTO> listEntity2DetailDTO(List<DivisionDeLugarEntity> entityList) {
-        List<DivisionDeLugarDetailDTO> list = new ArrayList<>();
-        for (DivisionDeLugarEntity entity : entityList) {
-            list.add(new DivisionDeLugarDetailDTO(entity));
+    @GET
+    @Path("{id: \\d+}/lugar")
+    public LugarDetailDTO getLugar(@PathParam("id")Long id) throws BusinessLogicException{
+        DivisionDeLugarEntity division=divisionDeLugarLogic.find(id);
+        if(division==null){
+            throw new BusinessLogicException("No se encuentra la division con el id: "+id);
         }
-        return list;
+        return new LugarDetailDTO(division.getLugar());
     }
-
 }

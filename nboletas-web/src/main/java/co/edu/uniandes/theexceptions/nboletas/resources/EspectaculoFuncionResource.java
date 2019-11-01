@@ -23,6 +23,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.PathParam;
+
 /**
  *
  * @author jf.ramos
@@ -32,25 +33,25 @@ import javax.ws.rs.PathParam;
 @Consumes("application/json")
 @Stateless
 public class EspectaculoFuncionResource {
-    
+
     @Inject
     EspectaculoLogic espectaculoLogic;
-    
+
     @Inject
     FuncionLogic funcionLogic;
-    
+
     @POST
     public FuncionDetailDTO createEspectaculoFuncion(@PathParam("idEspectaculo") Long idEspectaculo, FuncionDetailDTO funcion) throws BusinessLogicException {
         EspectaculoEntity espectaculo = espectaculoLogic.find(idEspectaculo);
         if (espectaculo == null) {
-            throw new BusinessLogicException("No existe la division con el id: " + idEspectaculo);
+            throw new BusinessLogicException("No existe el espectaculo con el id: " + idEspectaculo);
         }
         FuncionEntity funcionEntity = funcion.toEntity();
         funcionEntity.setEspectaculo(espectaculo);
         FuncionEntity funcionCreada = funcionLogic.create(funcionEntity);
         return new FuncionDetailDTO(funcionCreada);
     }
-    
+
     /**
      *
      * @param idEspectaculo
@@ -65,14 +66,14 @@ public class EspectaculoFuncionResource {
             throw new BusinessLogicException("No existe el espectaculo con ese id: " + idEspectaculo);
         }
         List<FuncionEntity> funcionesE = espectaculo.getFunciones();
-        if(funcionesE!=null){
-        for (FuncionEntity funcionEntity : funcionesE) {
-            list.add(funcionEntity);
-        }
+        if (funcionesE != null) {
+            for (FuncionEntity funcionEntity : funcionesE) {
+                list.add(funcionEntity);
+            }
         }
         return listEntity2DetailDTO(list);
     }
-    
+
     @GET
     @Path("{idFuncion: \\d+}")
     public FuncionDetailDTO getEspectaculoFuncion(@PathParam("idEspectaculo") Long idEspectaculo, @PathParam("idFuncion") Long idFuncion) throws BusinessLogicException {
@@ -87,7 +88,7 @@ public class EspectaculoFuncionResource {
         funcion.setEspectaculo(espectaculo);
         return new FuncionDetailDTO(funcion);
     }
-    
+
     @PUT
     @Path("{idFuncion: \\d+}")
     public FuncionDetailDTO updateEspectaculoFuncion(@PathParam("idEspectaculo") Long idEspectaculo, @PathParam("idFuncion") Long idFuncion, FuncionDetailDTO funcion) throws BusinessLogicException {
@@ -104,7 +105,7 @@ public class EspectaculoFuncionResource {
         FuncionEntity actual = funcionLogic.update(funcionActualizar);
         return new FuncionDetailDTO(actual);
     }
-    
+
     @DELETE
     @Path("{idFuncion: \\d+}")
     public void deleteEspectaculoFuncion(@PathParam("idEspectaculo") Long idEspectaculo, @PathParam("idFuncion") Long idFuncion) throws BusinessLogicException {
@@ -127,5 +128,5 @@ public class EspectaculoFuncionResource {
         }
         return list;
     }
-    
+
 }

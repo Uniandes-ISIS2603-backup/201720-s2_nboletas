@@ -16,6 +16,10 @@ public class DivisionDeLugarDTO {
     private Long id;
 
     private String name;
+    
+    private String imagen;
+
+    
 
     public DivisionDeLugarDTO() {
     }
@@ -23,6 +27,7 @@ public class DivisionDeLugarDTO {
     public DivisionDeLugarDTO(DivisionDeLugarEntity division) {
         this.id = division.getId();
         this.name = division.getNombre();
+        this.imagen= division.getImagen();
     }
 
     public Long getId() {
@@ -41,10 +46,18 @@ public class DivisionDeLugarDTO {
         this.name = name;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
     public DivisionDeLugarEntity toEntity() {
         DivisionDeLugarEntity division = new DivisionDeLugarEntity();
         division.setId(this.id);
         division.setNombre(this.name);
+        division.setImagen(this.imagen);
         return division;
     }
 }

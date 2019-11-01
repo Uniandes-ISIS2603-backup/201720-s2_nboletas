@@ -1,0 +1,20 @@
+[{
+    "id": "0",
+    "nombreEmpresa":"Tu, NO OTRA VEZ"
+},{
+    "id": "1",
+    "nombreEmpresa":"CULO DE MONDADA",
+    "espectaculo":[{
+        "id": "0",
+        "descripcion":"aloja",
+        "nombre":"que te importa"
+    }]
+},{
+    "id": "2",
+    "nombreEmpresa":"ECHEVERRY",
+    "espectaculo":[{
+        "id": "1",
+        "descripcion":"erda",
+        "nombre":"erdax2"
+    }]
+}]

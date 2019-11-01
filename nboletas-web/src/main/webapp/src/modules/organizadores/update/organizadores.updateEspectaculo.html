@@ -1,0 +1,34 @@
+<form ng-submit="updateOrganizador()" name="organizador">
+
+                    <div ng-if="edit" class="panel-group" id="theOrganizadores">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Associated Espectaculos</div>
+                            <div class="panel-body">
+                                <div id="div2" ondrop="angular.element(document.getElementById('theOrganizadores')).scope().dropAdd(event)" ondragover="angular.element(document.getElementById('theOrganizadores')).scope().allowDrop(event)">
+                                    <label></label>
+                                    <div ng-show="edit" ng-repeat="espectaculo in organizador.espectaculos">
+                                        <p draggable="true" ondragstart="angular.element(document.getElementById('theOrganizadores')).scope().drag(event)" id="{{espectaculo.id}}">{{espectaculo.nombre}}</p>                                 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-success">
+                            <div class="panel-heading">All Espectaculos</div>
+                            <div class="panel-body">
+                                <div id="div1" ondrop="angular.element(document.getElementById('theOrganizadores')).scope().dropDelete(event)" ondragover="angular.element(document.getElementById('theOrganizadores')).scope().allowDrop(event)">
+                                    <label></label>
+                                    <div ng-repeat="espectaculo in allEspectaculosShow">
+                                        <p draggable="true" ondragstart="angular.element(document.getElementById('theOrganizadores')).scope().drag(event)" id="{{espectaculo.id}}">{{espectaculo.nombre}}</p>                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-show="organizador.$valid" type="submit" value="Save" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="organizadoresList">Cancel</a>
+                        </div>
+                    </div>
+</form>

@@ -1,0 +1,24 @@
+<article class="post" ng-repeat="boleta in boletasRecords">
+    <header>
+        <div class="title">
+            <h2><a ui-sref="boletaDetail({boletaId: boleta.id})">{{"Boleta #" + boleta.id}}</a></h2>
+        </div>
+    </header>
+    <a ui-sref="boletaDetail({boletaId: boleta.id})" class="image featured"><img ng-src="{{boleta.imagen}}" alt="" /></a>
+    <p>Precio: {{boleta.precio}}</p>
+    <p>¿Esta Vendida?: {{boleta.vendida}}</p>
+    <footer>
+        <ul class="actions">
+            <li><a ng-if="hasPermissions()" ui-sref="boletaUpdate({boletaId: boleta.id})" class="button big">Actualizar</a></li>
+            <li><a ng-if="hasPermissions()" ui-sref="boletaDelete({boletaId: boleta.id})" class="button big">Borrar</a></li>
+        </ul>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>
+<!-- Pagination -->
+<ul class="actions pagination" ng-if="hasPermissions()">
+    <li><a ui-sref="boletasCreate" class="button big next">Agregar</a>
+</ul>

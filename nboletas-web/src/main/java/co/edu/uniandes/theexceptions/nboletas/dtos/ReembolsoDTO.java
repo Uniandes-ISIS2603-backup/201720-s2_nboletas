@@ -12,23 +12,28 @@ import co.edu.uniandes.theexceptions.nboletas.entities.ReembolsoEntity;
  * @author jm.contreras10
  */
 public class ReembolsoDTO {
-    
+
     private Long id;
     private double valor;
-
+    private String imagen;
+    
     public ReembolsoDTO() {
 
     }
 
     public ReembolsoDTO(ReembolsoEntity entity) {
-        this.id = entity.getId();
-        this.valor = entity.getValor();
+        if (entity != null) {
+            this.id = entity.getId();
+            this.valor = entity.getValor();
+            this.imagen = entity.getImagen();
+        }
     }
 
     public ReembolsoEntity toEntity() {
         ReembolsoEntity entity = new ReembolsoEntity();
         entity.setId(this.id);
         entity.setValor(this.valor);
+        entity.setImagen(this.imagen);
         return entity;
     }
 
@@ -40,13 +45,27 @@ public class ReembolsoDTO {
         this.id = id;
     }
 
-    public Double getValor() {
+    public double getValor() {
         return valor;
     }
 
     public void setValor(double valor) {
         this.valor = valor;
     }
-    
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
     
 }

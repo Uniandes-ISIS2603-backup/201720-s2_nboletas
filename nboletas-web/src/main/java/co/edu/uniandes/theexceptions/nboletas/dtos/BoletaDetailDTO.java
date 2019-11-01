@@ -30,6 +30,8 @@ import co.edu.uniandes.theexceptions.nboletas.entities.FuncionEntity;
 import co.edu.uniandes.theexceptions.nboletas.entities.ReembolsoEntity;
 import co.edu.uniandes.theexceptions.nboletas.entities.SillaEntity;
 import co.edu.uniandes.theexceptions.nboletas.entities.UsuarioEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -37,7 +39,7 @@ import co.edu.uniandes.theexceptions.nboletas.entities.UsuarioEntity;
  */
 public class BoletaDetailDTO extends BoletaDTO {
 
-   private ReembolsoDTO reembolso;
+    private ReembolsoDTO reembolso;
 
     private EnvioDTO envio;
 
@@ -63,41 +65,43 @@ public class BoletaDetailDTO extends BoletaDTO {
      */
     public BoletaDetailDTO(BoletaEntity entity) {
         super(entity);
-        ReembolsoEntity reembolsoA = entity.getReembolso();
-        if (null != reembolsoA) {
-            this.reembolso = new ReembolsoDTO(reembolsoA);
-        }
-        entity.setReembolso(null);
+        if (entity != null) {
+            ReembolsoEntity reembolsoA = entity.getReembolso();
+            if (null != reembolsoA) {
+                this.reembolso = new ReembolsoDTO(reembolsoA);
+            }
+            entity.setReembolso(null);
 
-        EnvioEntity envioA = entity.getEnvio();
-        if (null != envioA) {
-            this.envio = new EnvioDTO(envioA);
-        }
-        entity.setEnvio(null);
+            EnvioEntity envioA = entity.getEnvio();
+            if (null != envioA) {
+                this.envio = new EnvioDTO(envioA);
+            }
+            entity.setEnvio(null);
 
-        UsuarioEntity usuarioA = entity.getUsuario();
-        if (null != usuarioA) {
-            this.usuario = new UsuarioDTO(usuarioA);
-        }
-        entity.setUsuario(usuarioA);
+            UsuarioEntity usuarioA = entity.getUsuario();
+            if (null != usuarioA) {
+                this.usuario = new UsuarioDTO(usuarioA);
+            }
+            entity.setUsuario(usuarioA);
 
-        ComentarioEntity comentarioA = entity.getComentario();
-        if (null != comentarioA) {
-            this.comentario = new ComentarioDTO(comentarioA);
-        }
-        entity.setComentario(comentarioA);
+            ComentarioEntity comentarioA = entity.getComentario();
+            if (null != comentarioA) {
+                this.comentario = new ComentarioDTO(comentarioA);
+            }
+            entity.setComentario(comentarioA);
 
-        FuncionEntity funcionA = entity.getFuncion();
-        if (null != funcionA) {
-            this.funcion = new FuncionDTO(funcionA);
-        }
-        entity.setFuncion(funcionA);
+            FuncionEntity funcionA = entity.getFuncion();
+            if (null != funcionA) {
+                this.funcion = new FuncionDTO(funcionA);
+            }
+            entity.setFuncion(funcionA);
 
-        SillaEntity sillaA = entity.getSilla();
-        if (null != sillaA) {
-            this.silla = new SillaDTO(sillaA);
+            SillaEntity sillaA = entity.getSilla();
+            if (null != sillaA) {
+                this.silla = new SillaDTO(sillaA);
+            }
+            entity.setSilla(sillaA);
         }
-        entity.setSilla(sillaA);
     }
 
     /**
@@ -181,5 +185,21 @@ public class BoletaDetailDTO extends BoletaDTO {
 
     public void setSilla(SillaDTO silla) {
         this.silla = silla;
+    }
+
+    public static List<BoletaDetailDTO> listBoletaEntity2BoletaDetailDTO(List<BoletaEntity> entityList) {
+        List<BoletaDetailDTO> list = new ArrayList<>();
+        for (BoletaEntity entity : entityList) {
+            list.add(new BoletaDetailDTO(entity));
+        }
+        return list;
+    }
+
+    public static List<BoletaEntity> listBoletaDetailDTO2BoletaEntity(List<BoletaDetailDTO> detailDtoList) {
+        List<BoletaEntity> list = new ArrayList<>();
+        for (BoletaDetailDTO detail : detailDtoList) {
+            list.add(detail.toEntity());
+        }
+        return list;
     }
 }

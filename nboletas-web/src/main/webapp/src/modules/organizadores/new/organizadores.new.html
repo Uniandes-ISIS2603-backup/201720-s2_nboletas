@@ -1,0 +1,23 @@
+<article class="post">
+    <form ng-submit="createOrganizador()" name="organizador">
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="organizadorNombreEmpresa" class="col-sm-2">Nombre De La Empresa:</label>
+                <input id="organizadorNombreEmpresa" required ng-model="organizadorNombreEmpresa" class="col-sm-6"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-sm-4" ng-if="!organizador.$valid">
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong><p>All inputs are required*</p>
+                </div> 
+            </div> 
+        </div> 
+        <div class="form-group row">
+            <div class="form-group col-sm-12">
+                <input ng-show="organizador.$valid" type="submit" value="Guardar" class="button big"/>
+                <a class="button big" ui-sref="organizadoresList">Cancelar</a>
+            </div>
+        </div>
+    </form>    
+</article>

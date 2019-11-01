@@ -16,6 +16,8 @@ public class FuncionDTO {
 
     private Long id;
     private Date fecha;
+    private String hora;
+    private String imagen;
 
     public FuncionDTO() {
     }
@@ -23,12 +25,16 @@ public class FuncionDTO {
     public FuncionDTO(FuncionEntity entity) {
         this.id = entity.getId();
         this.fecha = entity.getFecha();
+        this.hora = entity.getHora();
+        this.imagen = entity.getImagen();
     }
 
     public FuncionEntity toEntity() {
         FuncionEntity entity = new FuncionEntity();
         entity.setId(this.getId());
         entity.setFecha(this.getFecha());
+        entity.setHora(this.getHora());
+        entity.setImagen(this.getImagen());
         return entity;
     }
 
@@ -59,4 +65,34 @@ public class FuncionDTO {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+    /**
+     * @return the hora
+     */
+    public String getHora() {
+        return hora;
+    }
+
+    /**
+     * @param hora the hora to set
+     */
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
+    
 }

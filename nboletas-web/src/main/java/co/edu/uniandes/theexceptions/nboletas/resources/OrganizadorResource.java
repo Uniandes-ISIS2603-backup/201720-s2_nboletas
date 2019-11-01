@@ -9,10 +9,10 @@ import co.edu.uniandes.theexceptions.nboletas.dtos.OrganizadorDetailDTO;
 import co.edu.uniandes.theexceptions.nboletas.ejb.OrganizadorLogic;
 import co.edu.uniandes.theexceptions.nboletas.entities.OrganizadorEntity;
 import co.edu.uniandes.theexceptions.nboletas.exceptions.BusinessLogicException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -46,9 +46,14 @@ public class OrganizadorResource {
      * @throws BusinessLogicException
      */
     @POST
-    public OrganizadorDetailDTO createOrganizador(OrganizadorDetailDTO organizador) throws BusinessLogicException {
-        OrganizadorEntity organizadorA = organizador.toEntity();
-        return new OrganizadorDetailDTO(organizadorLogic.create(organizadorA));
+    public OrganizadorDetailDTO createOrganizador(OrganizadorDetailDTO organizador) throws BusinessLogicException, PersistenceException {
+        OrganizadorEntity organizadorA = null;
+        try {
+            organizadorA = organizadorLogic.create(organizador.toEntity());
+        } catch (PersistenceException e) {
+            throw new PersistenceException("Hubo un error al crear la boleta: " + e.getMessage());
+        }
+        return new OrganizadorDetailDTO(organizadorA);
     }
 
     /**
@@ -59,13 +64,14 @@ public class OrganizadorResource {
      * @throws BusinessLogicException
      */
     @GET
-    public List<OrganizadorDetailDTO> getOrganizadores() throws BusinessLogicException {
-        return listEntity2DetailDTO(organizadorLogic.findAll());
+    public List<OrganizadorDetailDTO> getOrganizadores() throws BusinessLogicException, PersistenceException {
+        OrganizadorDetailDTO entrega = new OrganizadorDetailDTO();
+        return entrega.listOrganizadorEntity2OrganizadorDetailDTO(organizadorLogic.findAll());
     }
 
     @GET
     @Path("{id: \\d+}")
-    public OrganizadorDetailDTO getOrganizador(@PathParam("id") Long id) throws BusinessLogicException {
+    public OrganizadorDetailDTO getOrganizador(@PathParam("id") Long id) throws BusinessLogicException, PersistenceException {
         OrganizadorEntity organizador = organizadorLogic.find(id);
         if (organizador == null) {
             throw new BusinessLogicException("No existe el organizador con el id: " + id);
@@ -88,12 +94,17 @@ public class OrganizadorResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public OrganizadorDetailDTO updateOrganizador(@PathParam("id") Long id, OrganizadorDetailDTO organizador) throws BusinessLogicException, UnsupportedOperationException {
+    public OrganizadorDetailDTO updateOrganizador(@PathParam("id") Long id, OrganizadorDetailDTO organizador) throws BusinessLogicException, PersistenceException {
         organizador.setId(id);
         if (null == organizadorLogic.find(id)) {
             throw new BusinessLogicException("No existe el organizador con el id: " + id);
         }
-        OrganizadorEntity organizadorActualizada = organizadorLogic.update(organizador.toEntity());
+        OrganizadorEntity organizadorActualizada = null;
+        try {
+            organizadorActualizada = organizadorLogic.update(organizador.toEntity());
+        } catch (PersistenceException e) {
+            throw new PersistenceException("hubo un error al actualizar la boleta: " + e.getMessage());
+        }
         return (new OrganizadorDetailDTO(organizadorActualizada));
     }
 
@@ -110,31 +121,15 @@ public class OrganizadorResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteOrganizador(@PathParam("id") Long id) throws BusinessLogicException {
+    public void deleteOrganizador(@PathParam("id") Long id) throws BusinessLogicException, PersistenceException {
         OrganizadorEntity organizador = organizadorLogic.find(id);
         if (null == organizador) {
             throw new BusinessLogicException("No existe el organizador con el id: " + id);
         }
-        organizadorLogic.delete(organizador);
-    }
-
-    /**
-     *
-     * lista de entidades a DTO.
-     *
-     * Este método convierte una lista de objetos BoletaEntity a una lista de
-     * objetos BoletaDetailDTO (json)
-     *
-     * @param entityList corresponde a la lista de Boletas de tipo Entity que
-     * vamos a convertir a DTO.
-     * @return la lista de Boletas en forma DTO (json)
-     */
-    private List<OrganizadorDetailDTO> listEntity2DetailDTO(List<OrganizadorEntity> entityList) {
-        List<OrganizadorDetailDTO> list = new ArrayList<>();
-        for (OrganizadorEntity entity : entityList) {
-            list.add(new OrganizadorDetailDTO(entity));
+        try {
+            organizadorLogic.delete(organizador);
+        } catch (PersistenceException e) {
+            throw new PersistenceException("Hubo un error al borrar la boleta: " + e.getMessage());
         }
-        return list;
     }
-
 }

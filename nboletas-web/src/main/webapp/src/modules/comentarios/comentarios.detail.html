@@ -1,0 +1,35 @@
+<article class="post" >
+    <header>
+        <div class="title">
+            <h2>{{"Comentario #" + currentcomentario.id}}</h2>
+        </div>
+    </header>
+    <a class="image featured"><img ng-src="{{currentcomentario.imagen}}" alt="" /></a>      
+    <div class="col-md-3">
+        <dl> 
+
+            <dt>Comentario</dt>
+            <dd>{{currentcomentario.comentario}}</dd>
+
+            <hr>
+            <dt>fecha</dt>
+            <dd>{{currentcomentario.fecha| date:'yyyy-MM-dd'}}</dd>
+
+            <hr>
+            <dt>Boleta</dt>
+            <dd><a ui-sref="boletaDetail({boletaId: currentcomentario.boleta.id})">{{currentcomentario.boleta.id}}</a></dd>
+
+
+            <hr>
+            <dt>Espectaculo</dt>
+            <dd><a ui-sref="espectaculoDetail({espectaculoId: currentcomentario.espectaculo.id})">{{currentcomentario.espectaculo.id}}</a></dd>
+        </dl>
+    </div>
+
+    <footer>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>

@@ -9,7 +9,6 @@ import co.edu.uniandes.theexceptions.nboletas.dtos.*;
 import co.edu.uniandes.theexceptions.nboletas.ejb.*;
 import co.edu.uniandes.theexceptions.nboletas.entities.*;
 import co.edu.uniandes.theexceptions.nboletas.exceptions.BusinessLogicException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -59,7 +58,7 @@ public class SillaResource {
      */
     @GET
     public List<SillaDetailDTO> getSillas() throws BusinessLogicException {
-        return listEntity2DetailDTO(sillaLogic.findAll());
+        return SillaDetailDTO.listSillaEntity2SillaDetailDTO(sillaLogic.findAll());
     }
 
     @GET
@@ -71,7 +70,7 @@ public class SillaResource {
         }
         return new SillaDetailDTO(silla);
     }
-    
+
     /**
      * PUT http://localhost:8080/nboletas-web/api/sillas/1 Ejemplo json { "id":
      * 1, "atirbuto1": "Valor nuevo" }
@@ -113,30 +112,16 @@ public class SillaResource {
         if (null == silla) {
             throw new BusinessLogicException("No existe la silla con el id: " + id);
         }
-
-        if (!silla.getBoletas().isEmpty()) {
-            //eliminar boletas
-        }
         sillaLogic.delete(silla);
     }
-
-    /**
-     *
-     * lista de entidades a DTO.
-     *
-     * Este método convierte una lista de objetos BoletaEntity a una lista de
-     * objetos BoletaDetailDTO (json)
-     *
-     * @param entityList corresponde a la lista de Boletas de tipo Entity que
-     * vamos a convertir a DTO.
-     * @return la lista de Boletas en forma DTO (json)
-     */
-    private List<SillaDetailDTO> listEntity2DetailDTO(List<SillaEntity> entityList) {
-        List<SillaDetailDTO> list = new ArrayList<>();
-        for (SillaEntity entity : entityList) {
-            list.add(new SillaDetailDTO(entity));
+    
+    @GET
+    @Path("{id: \\d+}/division")
+    public DivisionDeLugarDetailDTO getDivision(@PathParam("id") Long id)throws BusinessLogicException{
+        SillaEntity silla = sillaLogic.find(id);
+        if(silla == null){
+            throw new BusinessLogicException("No se encuentra la silla con el id: "+ id);
         }
-        return list;
+        return new DivisionDeLugarDetailDTO(silla.getDivision());
     }
-
 }

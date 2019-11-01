@@ -54,14 +54,14 @@ public class UsuarioPersistenceTest {
     private EntityManager em;
 
     /**
-     * Variable para martcar las transacciones del em anterior cuando se
+     * Variable para marcar las transacciones del em anterior cuando se
      * crean/borran datos para las pruebas.
      */
     @Inject
     UserTransaction utx;
 
     /**
-     *
+     * Estructura de datos que almacena los datos de los usuarios.
      */
     private List<UsuarioEntity> data = new LinkedList<UsuarioEntity>();
 

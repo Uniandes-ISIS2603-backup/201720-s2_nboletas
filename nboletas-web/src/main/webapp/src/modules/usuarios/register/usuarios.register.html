@@ -1,0 +1,73 @@
+<div class="container-fluid">
+    <div class="wrapper">
+        <form class="form-signin" ng-submit="registerUsuario()" name="usuario">
+
+            <div class="form-group row">
+                <div class="form-group col-md-6">
+                    <div class="alert alert-warning" ng-show="creationFailed">
+                        <p>{{status}}</p>
+                    </div>
+                    <dl>
+                        <!--UserName-->
+                        <hr>
+                        <dt><label for="userName" class="col-md-2 control-label">Usuario</label></dt>
+                        <div class="alert-warning" ng-if="!usuario.userName.$valid">
+                            (*)
+                        </div> 
+                        <dd><input id="userName" name="userName" class="form-control" type="text" ng-model="userName" ng-init="userName" required /></dd>
+
+                        <!--Password-->
+                        <hr> 
+                        <dt><label for="password" class="col-md-2 control-label">Clave</label></dt>
+                        <div class="alert-warning" ng-if="!usuario.password.$valid">
+                            (*)
+                        </div>
+                        <dd><input id="password" name="password" class="form-control" type="password" ng-model="password" required /></dd>
+
+                        <!--Nombre-->
+                        <hr>
+                        <dt><label for="nombreUsuario" class="col-md-2 control-label">Nombre</label></dt>
+                        <div class="alert-warning" ng-if="!usuario.nombreUsuario.$valid">
+                            (*)
+                        </div> 
+                        <dd><input id="nombreUsuario" name="nombreUsuario" class="form-control" type="text" ng-model="nombreUsuario" required /></dd>
+
+                        <!--Email-->
+                        <hr>
+                        <div class="alert-warning" ng-if="!usuario.email.$valid">
+                            <p>El correo electronico debe estar en un formato valido*</p><hr>
+                        </div> 
+                        <dt><label for="email" class="col-md-2 control-label">Email</label></dt>
+                        <dd><input id="email" name="email" class="form-control" type="email" ng-model="email" required /></dd>
+                        
+                        <!--Pais-->
+                        <hr>
+                        <dt><label for="pais" class="col-md-2 control-label">Pais</label></dt>
+                        <div class="alert-warning" ng-if="!usuario.pais.$valid">
+                            (*)
+                        </div> 
+                        <dd><input id="pais" name="pais" class="form-control" type="text" ng-model="pais" required /></dd>
+
+                        <!--Ciudad-->
+                        <hr>
+                        <dt><label for="ciudad" class="col-md-2 control-label">Ciudad</label></dt>
+                        <div class="alert-warning" ng-if="!usuario.ciudad.$valid">
+                            (*)
+                        </div> 
+                        <dd><input id="ciudad" name="ciudad" class="form-control" type="text" ng-model="ciudad" required /></dd>
+
+
+                    </dl>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-group col-sm-12"> 
+                    <input ng-show="usuario.$invalid" type="submit" value="Registrarse" class="btn btn-success disabled"/>
+                    <input ng-show="usuario.$valid" type="submit" value="Registrarse" class="btn btn-success"/>
+                    <a class="btn btn-info" ui-sref="usuario">Cancelar</a>
+                </div>
+           </div>
+
+        </form>
+    </div>
+</div>

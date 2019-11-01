@@ -23,13 +23,23 @@ public class DivisionDeLugarEntity extends BaseEntity implements Serializable {
 
     private String nombre;
 
+    private String imagen;
+    
     @PodamExclude
-    @OneToMany(orphanRemoval = true,cascade=CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "division")
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "division")
     private List<SillaEntity> sillas;
 
     @PodamExclude
     @OneToOne(fetch = FetchType.LAZY)
     private LugarEntity lugar;
+    
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
     public String getNombre() {
         return nombre;

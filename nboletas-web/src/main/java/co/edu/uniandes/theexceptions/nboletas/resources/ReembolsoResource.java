@@ -5,16 +5,14 @@
  */
 package co.edu.uniandes.theexceptions.nboletas.resources;
 
-import co.edu.uniandes.theexceptions.nboletas.dtos.ReembolsoDTO;
 import co.edu.uniandes.theexceptions.nboletas.dtos.ReembolsoDetailDTO;
 import co.edu.uniandes.theexceptions.nboletas.ejb.ReembolsoLogic;
 import co.edu.uniandes.theexceptions.nboletas.entities.ReembolsoEntity;
 import co.edu.uniandes.theexceptions.nboletas.exceptions.BusinessLogicException;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -23,7 +21,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -34,105 +31,83 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @Stateless
 public class ReembolsoResource {
-    
-        
+
     @Inject
     private ReembolsoLogic logic;
+
     
-    private static final Logger LOGGER = Logger.getLogger(ReembolsoResource.class.getName());
+    @POST
+    public ReembolsoDetailDTO createReembolso(ReembolsoDetailDTO Reembolso) {
+        ReembolsoEntity reembolso = logic.create(Reembolso.toEntity());
+        return new ReembolsoDetailDTO(reembolso);
+    }
     
     /**
-     * GET para todos los Reembolsos.
+     * GET Retorna una colección de objetos Reembolso en representación Detail.
      * http://localhost:8080/nboletas-web/api/reembolsos
      *
-     * @return la lista de todos los reembolsos en objetos json DTO.
+     * @return la lista de todos los reembolsos en objetos json detail DTO.
+     * @throws BusinessLogicException
+     *  Cuando se incumplen las reglas del negocio.
      */
     @GET
-    public List<ReembolsoDTO> getReembolsos(){
-        return listEntity2DTO(logic.findAll());
+    public List<ReembolsoDetailDTO> getReembolsos() throws BusinessLogicException{
+        return ReembolsoDetailDTO.listReembolsoEntity2ReembolsoDetailDTO(logic.findAll());
     }
-    
+
     /**
-     * GET para un Reembolso.
+     * GET Retorna todos los objetos Reembolso en representación Detail.
      * http://localhost:8080/nboletas-web/api/reembolsos/id
      *
-     * @return la lista de todos los Reembolsos en objetos json DTO.
-     * @throws WebApplicationException
-     *
-     * En caso de no existir el id del Reembolso a buscar, retornando un 404:
-     * not found.
+     * @param idReembolso
+     * @return la lista de todos los Reembolsos en objetos json detail DTO.
+     * @throws BusinessLogicException
+     *  Cuando se incumplen las reglas del negocio.
      */
     @GET
-    @Path("{id: \\d+}")
-    public ReembolsoDetailDTO getReembolso(@PathParam("id") Long id) throws WebApplicationException {
-        ReembolsoEntity entity = logic.find(id);
-        if(entity==null)
-            throw new WebApplicationException("El recurso reembolso: " + id + " no existe.", 404);
-        return new ReembolsoDetailDTO(entity);
+    @Path("{idReembolso: \\d+}")
+    public ReembolsoDetailDTO getReembolso(@PathParam("idReembolso") Long idReembolso) throws BusinessLogicException {
+        ReembolsoEntity reembolso = logic.find(idReembolso);
+        if (reembolso == null) {
+            throw new BusinessLogicException("No se encontra el reembolso con el id: " + idReembolso);
+        }
+        return new ReembolsoDetailDTO(reembolso);
     }
-    
+
     /**
-     * POST http://localhost:8080/nboletas-web/api/reembolsos
+     * PUT Es el encargado de actualizar objetos Reembolso.
+     * http://localhost:8080/nboletas-web/api/reembolsos/id
      *
-     * @param reembolso correponde a la representación java del objeto json
-     * enviado en el llamado.
-     * @return Devuelve el objeto json de entrada que contiene el id creado por
-     * la base de datos y el tipo del objeto java.
-     */
-    @POST
-    public ReembolsoDetailDTO createReembolso(ReembolsoDetailDTO reembolso) throws BusinessLogicException {
-        ReembolsoEntity entity = reembolso.toEntity();
-        ReembolsoEntity newEntity = logic.create(entity);
-        return new ReembolsoDetailDTO(newEntity);
-    }
-    
-    /**
-     * PUT http://localhost:8080/nboletas-web/api/reembolsos/id
-     *
-     * @param id del Reembolso a actualizar.
-     * @param reembolso datos a actualizar del Reembolso.
+     * @param idReembolso
+     * @param reembolso
      * @return El Reembolso actualizado.
-     * @throws WebApplicationException
-     *
-     * En caso de no existir el id del Reembolso a actualizar, retornando un error 404:
-     * not found.
+     * @throws BusinessLogicException
+     *  Cuando se incumplen las reglas del negocio.
      */
     @PUT
-    @Path("{id: \\d+}")
-    public ReembolsoDetailDTO updateReembolso(@PathParam("id") Long id, ReembolsoDetailDTO reembolso) throws WebApplicationException{
-        if(logic.find(id) == null)
-            throw new WebApplicationException("El recurso usuario: " + id + " no existe.", 404);
-        ReembolsoEntity entity = reembolso.toEntity();
-        entity.setId(id);
-        ReembolsoEntity actualizedEntity = logic.update(entity);
-        return new ReembolsoDetailDTO(actualizedEntity);
+    @Path("{idReembolso: \\d+}")
+    public ReembolsoDetailDTO updateReembolso(@PathParam("idReembolso") Long idReembolso, ReembolsoDetailDTO reembolso) throws BusinessLogicException, PersistenceException {
+        reembolso.setId(idReembolso);
+        if (null == logic.find(idReembolso)) {
+            throw new BusinessLogicException("No existe el reembolso con el id: " + idReembolso);
+        }
+        ReembolsoEntity reembolsoActualizado = logic.update(reembolso.toEntity());
+        return (new ReembolsoDetailDTO(reembolsoActualizado));
     }
-    
+
     /**
-     * DELETE http://localhost:8080/nboletas-web/api/reembolso/id
+     * DELETE Elimina un objeto Reembolso.
+     * http://localhost:8080/nboletas-web/api/reembolso/id
      *
-     * @param id corresponde al Reembolso a borrar.
-     * @throws WebApplicationException
-     *
-     * En caso de no existir el id del Reembolso a borrar, retornando un 404 not:
-     * found.
-     *
+     * @param idReembolso
+     * @throws BusinessLogicException
+     *  Cuando se incumplen las reglas del negocio.
      */
     @DELETE
-    @Path("{id: \\d+}")
-    public void deleteUsuario(@PathParam("id") Long id)throws WebApplicationException {
-        ReembolsoEntity entity = logic.find(id);
-        if(entity==null)
-            throw new WebApplicationException("El recurso usuario: " + id + " no existe.", 404);
-        logic.delete(entity);
-    }  
-    
-    private List<ReembolsoDTO> listEntity2DTO(List<ReembolsoEntity> entityList){
-        List<ReembolsoDTO> list = new LinkedList<>();
-        for (ReembolsoEntity entity : entityList)
-            list.add(new ReembolsoDTO(entity));
-        return list;
+    @Path("{idReembolso: \\d+}")
+    public void deleteReembolso(@PathParam("idReembolso") Long idReembolso) throws BusinessLogicException, PersistenceException {
+        logic.delete(logic.find(idReembolso));
     }
-    
-    
+
+
 }

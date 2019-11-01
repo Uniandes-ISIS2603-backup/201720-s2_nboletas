@@ -6,6 +6,9 @@
 package co.edu.uniandes.theexceptions.nboletas.dtos;
 
 import co.edu.uniandes.theexceptions.nboletas.entities.EspectaculoEntity;
+import co.edu.uniandes.theexceptions.nboletas.entities.OrganizadorEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,6 +16,7 @@ import co.edu.uniandes.theexceptions.nboletas.entities.EspectaculoEntity;
  */
 public class EspectaculoDetailDTO extends EspectaculoDTO {
 
+    private List<OrganizadorDTO> organizadores;
     /**
      * Constructor por defecto
      */
@@ -26,6 +30,14 @@ public class EspectaculoDetailDTO extends EspectaculoDTO {
      */
     public EspectaculoDetailDTO(EspectaculoEntity entity) {
         super(entity);
+        if (entity != null) {
+            if (entity.getOrganizador()!= null) {
+                organizadores = new ArrayList<>();
+                for (OrganizadorEntity organizador : entity.getOrganizador()) {
+                    organizadores.add(new OrganizadorDTO(organizador));
+                }
+            }
+        }
     }
 
     /**
@@ -35,7 +47,30 @@ public class EspectaculoDetailDTO extends EspectaculoDTO {
      */
     @Override
     public EspectaculoEntity toEntity() {
-        EspectaculoEntity BoletaE = super.toEntity();
-        return BoletaE;
+        EspectaculoEntity entity = super.toEntity();
+        if (organizadores != null) {
+            List<OrganizadorEntity> organizadoresEntity = new ArrayList<>();
+            for (OrganizadorDTO organizador : organizadores) {
+                organizadoresEntity.add(organizador.toEntity());
+            }
+            entity.setOrganizador(organizadoresEntity);
+        }
+        return entity;
+    }
+
+    public static List<EspectaculoDetailDTO> listEspectaculoEntity2EspectaculoDetailDTO(List<EspectaculoEntity> entityList) {
+        List<EspectaculoDetailDTO> list = new ArrayList<>();
+        for (EspectaculoEntity entity : entityList) {
+            list.add(new EspectaculoDetailDTO(entity));
+        }
+        return list;
+    }
+
+    public static List<EspectaculoEntity> listEspectaculoDetailDto2EspectaculoEntity(List<EspectaculoDetailDTO> entityList) {
+        List<EspectaculoEntity> list = new ArrayList<>();
+        for (EspectaculoDetailDTO entity : entityList) {
+            list.add(entity.toEntity());
+        }
+        return list;
     }
 }

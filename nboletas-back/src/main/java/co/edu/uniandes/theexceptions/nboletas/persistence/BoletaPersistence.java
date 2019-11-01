@@ -25,6 +25,7 @@ package co.edu.uniandes.theexceptions.nboletas.persistence;
 
 import co.edu.uniandes.theexceptions.nboletas.entities.BoletaEntity;
 import javax.ejb.Stateless;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -37,4 +38,31 @@ public class BoletaPersistence extends AbstractPersistence<BoletaEntity> {
         super(BoletaEntity.class);
     }
 
+    @Override
+    public BoletaEntity update(BoletaEntity entity) throws PersistenceException {
+        String query = "UPDATE APP.BOLETAENTITY SET VENDIDA = ";
+        if (entity.isVendida()) {
+            query += "" + 1;
+        } else {
+            query += "" + 0;
+        }
+        if (entity.getPrecio() >= 0) {
+            query += ", PRECIO = " + entity.getPrecio();
+        }
+        if (entity.getFuncion() != null) {
+            query += ", FUNCION_ID = " + entity.getFuncion().getId();
+        }
+        if (entity.getSilla() != null) {
+            query += ", SILLA_ID = " + entity.getSilla().getId();
+        }
+        if (entity.getUsuario() != null) {
+            query += ", USUARIO_ID = " + entity.getUsuario().getId();
+        }
+        if (entity.getImagen()!= null) {
+            query += ", IMAGEN = '" + entity.getImagen() + "'";
+        }
+        query += " WHERE ID = " + entity.getId();
+        em.createNativeQuery(query).executeUpdate();
+        return entity;
+    }
 }

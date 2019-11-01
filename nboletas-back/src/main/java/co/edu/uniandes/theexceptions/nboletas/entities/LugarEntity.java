@@ -23,6 +23,7 @@ public class LugarEntity extends BaseEntity implements Serializable {
     private String direccion;
     private String tipo;
     private String ubicacion;
+    private String imagen;
 
     @PodamExclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "lugar")
@@ -101,4 +102,20 @@ public class LugarEntity extends BaseEntity implements Serializable {
     public void setDivisiones(List<DivisionDeLugarEntity> divisiones) {
         this.divisiones = divisiones;
     }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
+    
 }

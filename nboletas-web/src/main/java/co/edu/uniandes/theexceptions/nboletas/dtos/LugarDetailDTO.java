@@ -19,7 +19,7 @@ import java.util.ListIterator;
  * @author ja.gomez1
  */
 public class LugarDetailDTO extends LugarDTO {
-    
+
     private List<DivisionDeLugarDTO> divisiones;
 
     private List<FuncionDTO> funciones;
@@ -95,5 +95,17 @@ public class LugarDetailDTO extends LugarDTO {
      */
     public void setFunciones(List<FuncionDTO> funciones) {
         this.funciones = funciones;
+    }
+    
+    public static List<LugarDetailDTO> listLugarEntity2DetailDTO(List<LugarEntity> findAll) {
+        List<LugarDetailDTO> l = new ArrayList<>();
+        for(LugarEntity e : findAll) l.add(new LugarDetailDTO(e));
+        return l;
+    }
+    
+    public static List<LugarEntity> listLugarDetailDTO2Entity(List<LugarDetailDTO> findAll) {
+        List<LugarEntity> l = new ArrayList<>();
+        for(LugarDetailDTO e : findAll) l.add(e.toEntity());
+        return l;
     }
 }

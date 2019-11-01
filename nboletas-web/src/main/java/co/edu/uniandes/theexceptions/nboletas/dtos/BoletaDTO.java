@@ -37,6 +37,7 @@ public class BoletaDTO {
     private Long id;
     private double precio;
     private boolean vendida;
+    private String imagen;
 
     /**
      * Constructor por defecto
@@ -52,11 +53,12 @@ public class BoletaDTO {
      */
     public BoletaDTO(BoletaEntity boleta) {
 
-        if(boleta != null){
+        if (boleta != null) {
 
             this.id = boleta.getId();
             this.precio = boleta.getPrecio();
             this.vendida = boleta.isVendida();
+            this.imagen = boleta.getImagen();
         }
     }
 
@@ -99,8 +101,24 @@ public class BoletaDTO {
         BoletaEntity entity = new BoletaEntity();
         entity.setId(this.id);
         entity.setPrecio(this.precio);
-        entity.setVenida(this.vendida);
+        entity.setVendida(this.vendida);
+        entity.setImagen(this.imagen);
         return entity;
     }
 
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    
 }

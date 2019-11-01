@@ -7,6 +7,7 @@ package co.edu.uniandes.theexceptions.nboletas.persistence;
 
 import co.edu.uniandes.theexceptions.nboletas.entities.ReembolsoEntity;
 import javax.ejb.Stateless;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -19,4 +20,23 @@ public class ReembolsoPersistence extends AbstractPersistence<ReembolsoEntity> {
         super(ReembolsoEntity.class);
     }
 
+    @Override
+    public ReembolsoEntity update(ReembolsoEntity entity) throws PersistenceException {
+        String query = "UPDATE APP.REEMBOLSOENTITY SET ";
+        if (entity.getValor() >= 0) {
+            query += "VALOR = " + entity.getValor();
+        }
+        if (entity.getUsuario() != null) {
+            query += ", USUARIO_ID = " + entity.getUsuario().getId();
+        }
+        if (entity.getBoleta()!= null) {
+            query += ", BOLETA_ID = " + entity.getBoleta().getId();
+        }
+        if (entity.getBoleta()!= null) {
+            query += ", IMAGEN = '" + entity.getBoleta().getId() + "'";
+        }
+        query += " WHERE ID = " + entity.getId();
+        em.createNativeQuery(query).executeUpdate();
+        return entity;
+    }
 }

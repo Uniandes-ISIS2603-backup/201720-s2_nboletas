@@ -33,12 +33,13 @@ import javax.ws.rs.Produces;
 @Consumes("application/json")
 @Stateless
 public class EspectaculoComentarioResouce {
+
     @Inject
     EspectaculoLogic espectaculoLogic;
-    
+
     @Inject
     ComentarioLogic comentarioLogic;
-    
+
     @POST
     public ComentarioDetailDTO createEspectaculoComentario(@PathParam("idEspectaculo") Long idEspectaculo, ComentarioDetailDTO comentario) throws BusinessLogicException {
         EspectaculoEntity espectaculo = espectaculoLogic.find(idEspectaculo);
@@ -50,7 +51,7 @@ public class EspectaculoComentarioResouce {
         ComentarioEntity comentarioCreado = comentarioLogic.create(comentarioEntity);
         return new ComentarioDetailDTO(comentarioCreado);
     }
-    
+
     @GET
     public List<ComentarioDetailDTO> getEspectaculoComentarios(@PathParam("idEspectaculo") Long idEspectaculo) throws BusinessLogicException {
         List<ComentarioEntity> list = new ArrayList<>();
@@ -59,18 +60,18 @@ public class EspectaculoComentarioResouce {
             throw new BusinessLogicException("No existe el espectaculo con ese id: " + idEspectaculo);
         }
         List<ComentarioEntity> comentarios = espectaculo.getComentarios();
-        if(comentarios!=null){
-        for (ComentarioEntity comentarioEntity : comentarios) {
-            list.add(comentarioEntity);
-        }
+        if (comentarios != null) {
+            for (ComentarioEntity comentarioEntity : comentarios) {
+                list.add(comentarioEntity);
+            }
         }
         return listEntity2DetailDTO(list);
     }
-    
+
     @GET
     @Path("{idComentario: \\d+}")
     public ComentarioDetailDTO getEspectaculoComentario(@PathParam("idEspectaculo") Long idEspectaculo, @PathParam("idComentario") Long idComentario) throws BusinessLogicException {
-        EspectaculoEntity espectaculo= espectaculoLogic.find(idEspectaculo);
+        EspectaculoEntity espectaculo = espectaculoLogic.find(idEspectaculo);
         if (espectaculo == null) {
             throw new BusinessLogicException("No existe el espectaculo con ese id: " + idEspectaculo);
         }
@@ -81,7 +82,7 @@ public class EspectaculoComentarioResouce {
         comentario.setEspectaculo(espectaculo);
         return new ComentarioDetailDTO(comentario);
     }
-    
+
     @PUT
     @Path("{idComentario: \\d+}")
     public ComentarioDetailDTO updateEspectaculoComentario(@PathParam("idEspectaculo") Long idEspectaculo, @PathParam("idComentario") Long idComentario, ComentarioDetailDTO comentario) throws BusinessLogicException {
@@ -98,7 +99,7 @@ public class EspectaculoComentarioResouce {
         ComentarioEntity actual = comentarioLogic.update(comentarioActualizar);
         return new ComentarioDetailDTO(actual);
     }
-    
+
     @DELETE
     @Path("{idComentario: \\d+}")
     public void deleteEspectaculoComentario(@PathParam("idEspectaculo") Long idEspectaculo, @PathParam("idComentario") Long idComentario) throws BusinessLogicException {

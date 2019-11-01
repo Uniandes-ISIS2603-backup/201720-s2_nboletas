@@ -1,0 +1,27 @@
+ <article class="post" >
+    <header>
+        <div class="title">
+            <h2>{{"Envio #" + currentEnvio.id}}</h2>
+        </div>
+    </header>
+    <a class="image featured"><img ng-src="{{currentEnvio.imagen}}" alt="" /></a> 
+        <div class="col-md-3">
+            <dl> 
+                
+                <hr>
+                <dt>Direccion</dt>
+                <dd>{{currentEnvio.direccion}}</dd>
+                
+                 <hr>
+                <dt>Boleta</dt>
+                <dd><a ui-sref="boletaDetail({boletaId: currentEnvio.boleta.id})">{{currentEnvio.boleta.id}}</a></dd>
+            </dl>
+        </div>
+        <footer>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>
+

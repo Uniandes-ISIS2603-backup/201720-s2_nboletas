@@ -117,12 +117,11 @@ public class LugarPersistenceTest {
     @Test
     public void testUpdate() {
         LugarEntity entity = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
-        LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
-        newEntity.setId(entity.getId());
-        persistence.update(newEntity);
+        LugarEntity e2 = data.get(1);
+        entity.setDireccion(e2.getDireccion());
+        persistence.update(entity);
         LugarEntity resp = em.find(LugarEntity.class, entity.getId());
-        Assert.assertEquals(newEntity.getId(), resp.getId());
+        Assert.assertEquals(e2.getDireccion(), resp.getDireccion());
     }
 
     /**

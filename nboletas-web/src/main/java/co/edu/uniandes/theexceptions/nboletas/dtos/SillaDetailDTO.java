@@ -17,22 +17,22 @@ import java.util.List;
 public class SillaDetailDTO extends SillaDTO {
 
     private DivisionDeLugarDTO division;
-    
+
     private List<BoletaDTO> boletas;
-    
+
     public SillaDetailDTO() {
     }
 
     public SillaDetailDTO(SillaEntity entity) {
         super(entity);
-        if(entity.getDivision()!=null){
-            this.division= new DivisionDeLugarDTO(entity.getDivision());
+        if (entity.getDivision() != null) {
+            this.division = new DivisionDeLugarDTO(entity.getDivision());
         }
-        if(entity.getBoletas()!=null){
+        if (entity.getBoletas() != null) {
             this.boletas = new ArrayList<>();
-        for (BoletaEntity b : entity.getBoletas()) {
-            boletas.add(new BoletaDTO(b));
-        }
+            for (BoletaEntity b : entity.getBoletas()) {
+                boletas.add(new BoletaDTO(b));
+            }
         }
     }
 
@@ -55,17 +55,44 @@ public class SillaDetailDTO extends SillaDTO {
     @Override
     public SillaEntity toEntity() {
         SillaEntity silla = super.toEntity();
-        if(getDivision()!=null){
+        if (getDivision() != null) {
             silla.setDivision(division.toEntity());
         }
-        if(getBoletas()!=null){
-            List<BoletaEntity> boletasE= new ArrayList<>();
-            for(BoletaDTO b:getBoletas()){
+        if (getBoletas() != null) {
+            List<BoletaEntity> boletasE = new ArrayList<>();
+            for (BoletaDTO b : getBoletas()) {
                 boletasE.add(b.toEntity());
             }
             silla.setBoletas(boletasE);
         }
         return silla;
+    }
+    
+    /**
+     *
+     * lista de entidades a DTO.
+     *
+     * Este método convierte una lista de objetos BoletaEntity a una lista de
+     * objetos BoletaDetailDTO (json)
+     *
+     * @param entityList corresponde a la lista de Boletas de tipo Entity que
+     * vamos a convertir a DTO.
+     * @return la lista de Boletas en forma DTO (json)
+     */
+    public static List<SillaDetailDTO> listSillaEntity2SillaDetailDTO(List<SillaEntity> entityList) {
+        List<SillaDetailDTO> list = new ArrayList<>();
+        for (SillaEntity entity : entityList) {
+            list.add(new SillaDetailDTO(entity));
+        }
+        return list;
+    }
+    
+    public static List<SillaEntity> listSillaDetailDTO2SillaEntity(List<SillaDetailDTO> detailDtoList) {
+        List<SillaEntity> list = new ArrayList<>();
+        for (SillaDetailDTO detail : detailDtoList) {
+            list.add(detail.toEntity());
+        }
+        return list;
     }
 
 }

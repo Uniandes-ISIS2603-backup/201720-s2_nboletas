@@ -1,0 +1,39 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>{{currentDivision.name}}</h2>
+        </div>
+    </header>
+    
+   <div class="col-md-3">
+            <dl> 
+                
+                <hr>
+                <dt>ID</dt>
+                <dt>{{currentDivision.id}}</dt>
+                
+                <hr>
+                <dt>Nombre</dt>
+                <dd>{{currentDivision.name}}</dd>
+   
+                
+                <hr>
+                <dt>Sillas</dt>
+                <dd>
+                <ul>
+                    <li ng-repeat="x in currentDivision.sillas">
+                        <a href="#!/sillas/{{x.id}}/detail">{{x.id}}</a>
+                    </li>
+                </ul>
+                </dd>
+         
+            </dl>
+        </div>
+    <a ui-sref="divisionesDetail({divisionId: division.id})" class="image featured"><img ng-src="{{currentDivision.imagen}}" alt="" /></a>
+    <footer>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>

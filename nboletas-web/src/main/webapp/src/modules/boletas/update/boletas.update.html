@@ -1,0 +1,47 @@
+<article class="post">
+    <form ng-submit="updateBoleta()" name="boleta">
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="boletaPrecio" class="col-sm-2">Precio:</label>
+                <input id="boletaPrecio" required ng-model="boleta.precio" class="col-sm-6"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="boletaVendida" class="col-sm-2">¿Esta Vendida?</label>
+                <textarea id="boletaVendida" required ng-model="boleta.vendida" class="col-sm-6"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="boletaUsuario" class="col-sm-2">Usuario ID</label>
+                <textarea id="boletaUsuario" required ng-model="boleta.usuario.id" class="col-sm-6"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="boletaFuncion" class="col-sm-2">Funcion ID</label>
+                <textarea id="boletaFuncion" required ng-model="boleta.funcion.id" class="col-sm-6"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="boletaSilla" class="col-sm-2">Silla ID</label>
+                <textarea id="boletaVendida" required ng-model="boleta.silla.id" class="col-sm-6"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-sm-4" ng-if="!boleta.$valid">
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong><p>All inputs are required*</p>
+                </div> 
+            </div> 
+        </div> 
+        <div class="form-group row">
+            <div class="form-group col-sm-12">
+                <input ng-show="boleta.$valid" type="submit" value="Guardar" class="button big"/>
+                <a class="button big" ui-sref="boletasList">Cancelar</a>
+            </div>
+        </div>
+    </form>
+</article>

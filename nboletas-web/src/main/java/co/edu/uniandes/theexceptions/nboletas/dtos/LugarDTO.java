@@ -17,6 +17,8 @@ public class LugarDTO {
     private String ubicacion;
     private String tipo;
     private String direccion;
+    private String imagen;
+    
 
     public LugarDTO() {
     }
@@ -26,6 +28,7 @@ public class LugarDTO {
         this.ubicacion = entity.getUbicacion();
         this.tipo = entity.getTipo();
         this.direccion = entity.getDireccion();
+        this.imagen = entity.getImagen();
     }
 
     public LugarEntity toEntity() {
@@ -34,6 +37,7 @@ public class LugarDTO {
         entity.setDireccion(this.getDireccion());
         entity.setTipo(this.getTipo());
         entity.setUbicacion(this.getUbicacion());
+        entity.setImagen(this.getImagen());
         return entity;
     }
 
@@ -92,4 +96,20 @@ public class LugarDTO {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
+    
 }

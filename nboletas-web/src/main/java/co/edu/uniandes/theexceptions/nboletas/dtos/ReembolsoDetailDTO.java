@@ -8,29 +8,35 @@ package co.edu.uniandes.theexceptions.nboletas.dtos;
 import co.edu.uniandes.theexceptions.nboletas.entities.BoletaEntity;
 import co.edu.uniandes.theexceptions.nboletas.entities.ReembolsoEntity;
 import co.edu.uniandes.theexceptions.nboletas.entities.UsuarioEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author jm.contreras10
  */
-public class ReembolsoDetailDTO extends ReembolsoDTO{
-    
+public class ReembolsoDetailDTO extends ReembolsoDTO {
+
     private BoletaDTO boleta;
 
     private UsuarioDTO usuario;
-    
-    public ReembolsoDetailDTO(){
-        
+
+    public ReembolsoDetailDTO() {
+        super();
     }
 
     public ReembolsoDetailDTO(ReembolsoEntity entity) {
         super(entity);
-        BoletaEntity boletaA = entity.getBoleta();
-        if (boletaA != null)
-            boleta = new BoletaDTO(entity.getBoleta());
-        UsuarioEntity usuarioA = entity.getUsuario();
-        if(usuarioA != null)
-            usuario = new UsuarioDTO(entity.getUsuario());
+        if (entity != null) {
+            BoletaEntity boletaA = entity.getBoleta();
+            if (boletaA != null) {
+                boleta = new BoletaDTO(entity.getBoleta());
+            }
+            UsuarioEntity usuarioA = entity.getUsuario();
+            if (usuarioA != null) {
+                usuario = new UsuarioDTO(entity.getUsuario());
+            }
+        }
     }
 
     @Override
@@ -59,5 +65,35 @@ public class ReembolsoDetailDTO extends ReembolsoDTO{
 
     public void setUsuario(UsuarioDTO usuario) {
         this.usuario = usuario;
+    }
+
+    /**
+     * Transforma una lista de ReembolsoEntity a una lista de
+     * ReembolsoDetailDTO.
+     *
+     * @param entityList
+     * @return
+     */
+    public static List<ReembolsoDetailDTO> listReembolsoEntity2ReembolsoDetailDTO(List<ReembolsoEntity> entityList) {
+        List<ReembolsoDetailDTO> list = new ArrayList<>();
+        for (ReembolsoEntity entity : entityList) {
+            list.add(new ReembolsoDetailDTO(entity));
+        }
+        return list;
+    }
+
+    /**
+     * Transforma una lista de ReembolsoEntity a una lista de
+     * ReembolsoDetailDTO.
+     *
+     * @param detailList
+     * @return
+     */
+    public static List<ReembolsoEntity> listReembolsoDetailDTO2ReembolsoEntity(List<ReembolsoDetailDTO> detailList) {
+        List<ReembolsoEntity> list = new ArrayList<>();
+        for (ReembolsoDetailDTO detail : detailList) {
+            list.add(detail.toEntity());
+        }
+        return list;
     }
 }

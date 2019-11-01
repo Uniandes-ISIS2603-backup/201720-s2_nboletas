@@ -21,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+
 /**
  *
  * @author jf.ramos
@@ -30,16 +31,15 @@ import javax.ws.rs.Produces;
 @Consumes("application/json")
 @Stateless
 public class ArtistaResource {
-    
 
- @Inject
- ArtistaLogic artistaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+    @Inject
+    ArtistaLogic artistaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
     /**
      * POST http://localhost:8080/nboletas-web/api/artistas
      *
-     * @param Artista correponde a la representación java del objeto json enviado
-     * en el llamado.
+     * @param Artista correponde a la representación java del objeto json
+     * enviado en el llamado.
      * @return Devuelve el objeto json de entrada que contiene el id creado por
      * la base de datos y el tipo del objeto java. Ejemplo: { "type":
      * "ArtistaDetailDTO", "id": 1, atributo1 : "valor" }
@@ -63,7 +63,6 @@ public class ArtistaResource {
         return listEntity2DetailDTO(artistaLogic.findAll());
     }
 
-    
     @GET
     @Path("{id: \\d+}")
     public ArtistaDetailDTO getArtista(@PathParam("id") Long id) throws BusinessLogicException {
@@ -75,8 +74,8 @@ public class ArtistaResource {
     }
 
     /**
-     * PUT http://localhost:8080/nboletas-web/api/artistas/1 Ejemplo json { "id":
-     * 1, "atributo1": "Valor nuevo" }
+     * PUT http://localhost:8080/nboletas-web/api/artistas/1 Ejemplo json {
+     * "id": 1, "atributo1": "Valor nuevo" }
      *
      * @param id corresponde a la Boleta a actualizar.
      * @param artista corresponde al objeto con los cambios que se van a
@@ -87,10 +86,9 @@ public class ArtistaResource {
      * En caso de no existir el id del Artista a actualizar se retorna un 404
      * con el mensaje.
      */
-    
     @PUT
     @Path("{id: \\d+}")
-    public ArtistaDetailDTO updateArtista(@PathParam("id") Long id, ArtistaDetailDTO artista) throws BusinessLogicException{
+    public ArtistaDetailDTO updateArtista(@PathParam("id") Long id, ArtistaDetailDTO artista) throws BusinessLogicException {
         artista.setId(id);
         if (null == artistaLogic.find(id)) {
             throw new BusinessLogicException("No existe el artista con el id: " + id);
@@ -110,7 +108,6 @@ public class ArtistaResource {
      *
      * Seguir corrigiendo
      */
-    
     @DELETE
     @Path("{id: \\d+}")
     public void deleteArtista(@PathParam("id") Long id) throws BusinessLogicException {

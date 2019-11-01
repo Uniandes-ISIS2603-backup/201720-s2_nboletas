@@ -1,0 +1,23 @@
+<article class="post" ng-repeat="envio in enviosRecords">
+    <header>
+        <div class="title">
+            <h2><a ui-sref="envioDetail({envioId: envio.id})">{{"Envio #" + envio.id}}</a></h2>
+        </div>
+    </header>
+    <a ui-sref="envioDetail({envioId: envio.id})" class="image featured"><img ng-src="{{envio.imagen}}" alt="" /></a>
+    <p>Dirreccion: {{envio.direccion}}</p>
+    <footer>
+        <ul class="actions">
+            <li><a ng-if="hasPermissions()" ui-sref="envioUpdate({envioId: envio.id})" class="button big">Actualizar</a></li>
+            <li><a ng-if="hasPermissions()" ui-sref="envioDelete({envioId: envio.id})" class="button big">Borrar</a></li>
+        </ul>
+        <ul class="stats">
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>
+    </footer>
+</article>
+<!-- Pagination -->
+<ul class="actions pagination" ng-if="hasPermissions()">
+    <li><a ui-sref="enviosCreate" class="button big next">Agregar</a>
+</ul>

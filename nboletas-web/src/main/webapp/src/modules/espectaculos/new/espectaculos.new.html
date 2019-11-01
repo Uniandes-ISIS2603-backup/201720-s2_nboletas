@@ -1,0 +1,35 @@
+<article class="post">
+    <form ng-submit="createEspectaculo()" name="espectaculo">
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="espectaculoNombre" class="col-sm-2">Nombre:</label>
+                <input id="espectaculoNombre" required ng-model="espectaculoNombre" class="col-sm-6"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="espectaculoDescripcion" class="col-sm-2">Descripcion:</label>
+                <textarea id="espectaculoDescripcion" required ng-model="espectaculoDescripcion" class="col-sm-6"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="espectaculoImagen" class="col-sm-2">Link de la imagen:</label>
+                <textarea id="espectaculoImagen" required ng-model="espectaculoImagen" class="col-sm-6"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-sm-4" ng-if="!espectaculo.$valid">
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong><p>All inputs are required*</p>
+                </div> 
+            </div> 
+        </div> 
+        <div class="form-group row">
+            <div class="form-group col-sm-12">
+                <input ng-show="espectaculo.$valid" type="submit" value="Guardar" class="button big"/>
+                <a class="button big" ui-sref="espectaculosList">Cancelar</a>
+            </div>
+        </div>
+    </form>
+</article>

@@ -1,0 +1,65 @@
+<article class="post">
+    
+    <form ng-submit="updateUsuario()" name="usuario">
+
+        <div class="form-group row">
+            <div class="form-group col-sm-4" ng-if="!usuario.$valid">
+                <div class="alert alert-warning">
+                    <strong>Cuidado!</strong><p>Todos los campos deben ser completados.</p>
+                </div> 
+            </div> 
+        </div> 
+        
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                
+                <label for="usuarioC" class="col-sm-2" >UserName:</label>
+                <input id="usuarioC" required ng-model="usuario.userName" class="col-sm-6"/>   
+                <br>
+                
+                <label for="pass" class="col-sm-2" >Password:</label>
+                <input id="pass" required ng-model="usuario.password" class="col-sm-6" type="password"/>   
+                <br>
+                
+                <label for="usuarioNombre" class="col-sm-2">Nombre:</label>
+                <input id="usuarioNombre" required ng-model="usuario.nombreUsuario" class="col-sm-6"/>
+                <br>
+
+                <label for="usuarioEmail" class="col-sm-2">email:</label>
+                <input id="usuarioEmail" required ng-model="usuario.email" class="col-sm-6"/>
+                <br>
+                
+                <label for="usuarioPais" class="col-sm-2">Pais:</label>
+                <input id="usuarioPais" required ng-model="usuario.pais" class="col-sm-6"/>
+                <br>
+
+                <label for="usuarioCiudad" class="col-sm-2">Ciudad:</label>
+                <input id="usuarioCiudad" required ng-model="usuario.ciudad" class="col-sm-6"/>
+                <br>
+                
+                <label for="usuarioImagen" class="col-sm-2">Imagen de perfil:</label>
+                <input id="usuarioImagen" ng-model="usuario.imagen" class="col-sm-6"/>
+                <br>
+                
+                <hr>
+                <div class="col-md-6" ng-if="hasPermissions()">
+                    <label for="si" class="col-sm-2">¿Es un admin?</label>
+                    <select name="IsAdmin" ng-model="usuario.admon" value="false">
+                        <option value="true">Si</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <hr>
+
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <div class="form-group col-sm-12">
+                <input ng-show="usuario.$valid" type="submit" value="Save" class="btn btn-success"/>    
+                <a class="btn btn-info" ui-sref="myAccount({usuarioId: currentLogedUser.id})">Cancel</a>
+            </div>
+        </div>
+        
+    </form>
+</article>

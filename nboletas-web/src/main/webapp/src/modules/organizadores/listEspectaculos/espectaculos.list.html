@@ -1,0 +1,16 @@
+<article class="post"></article>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2" ng-repeat="espectaculo in espectaculosRecord">
+            <div class="thumbnail">
+                <a ui-sref="espectaculoDetail({espectaculoId: espectaculo.id})">                    
+                    <img class="image featured" ng-src="{{espectaculo.imagen}}" alt="{{espectaculo.name}}" />                  
+                </a>
+            </div>
+            <div class="caption text-center">
+                    <p>{{espectaculo.nombre}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</article>

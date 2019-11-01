@@ -8,6 +8,7 @@ package co.edu.uniandes.theexceptions.nboletas.resources;
 import co.edu.uniandes.theexceptions.nboletas.dtos.ComentarioDetailDTO;
 import co.edu.uniandes.theexceptions.nboletas.ejb.ComentarioLogic;
 import co.edu.uniandes.theexceptions.nboletas.entities.ComentarioEntity;
+import co.edu.uniandes.theexceptions.nboletas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -65,8 +66,19 @@ public class ComentarioResource {
 
     @PUT
     @Path("{id: \\d+}")
-    public ComentarioDetailDTO updateComentario(@PathParam("id") Long id, ComentarioDetailDTO comentario) {
+    public ComentarioDetailDTO updateComentario(@PathParam("id") Long id, ComentarioDetailDTO comentario){
 
+        
+//         if (null == comentarioLogic.find(id)) {
+//            throw new BusinessLogicException("No existe comentario con id: " + id);
+//        }
+//        ComentarioEntity p = comentario.toEntity();
+//        p.setId(id);
+//        ComentarioEntity comentUpdated = comentarioLogic.update(p);
+//        return (new ComentarioDetailDTO(comentUpdated));
+        
+        
+        
         comentario.setId(id);
         ComentarioEntity entity = comentarioLogic.find(id);
         if (entity == null) {
@@ -74,6 +86,9 @@ public class ComentarioResource {
         }
         //revisar
         return new ComentarioDetailDTO(comentarioLogic.update(comentario.toEntity()));
+        
+        
+        
     }
 
     @DELETE

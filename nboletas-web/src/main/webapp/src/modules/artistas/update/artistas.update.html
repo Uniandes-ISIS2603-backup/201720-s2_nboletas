@@ -1,0 +1,61 @@
+<article class="post">
+    <form ng-submit="updateArtista()" name="artista">
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="artistaNombre" class="col-sm-2">Nombre:</label>
+                <input id="espectaculoNombre" required ng-model="artista.nombre" class="col-sm-6"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="artistaImagen" class="col-sm-2">Link de Imagen:</label>
+                <input id="espectaculoImagen" required ng-model="artista.imagen" class="col-sm-6"/>
+            </div>
+        </div>
+        <!-- Aca es para mostrar y selecionnar los organizadores -->
+            <div ng-if="edit" class="panel-group" id="theArtistas">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Associated Artistas</div>
+                    <div class="panel-body">
+                        <div id="div2" ondrop="angular.element(document.getElementById('theArtistas')).scope().dropAdd(event)" ondragover="angular.element(document.getElementById('theArtistas')).scope().allowDrop(event)">
+                            <label></label>
+                            <div ng-show="edit">
+                            <p draggable="false">Escoge algo</p>                                 
+                        </div>
+                            <div ng-show="edit" ng-repeat="espectaculo in artista.espectaculos>
+                                <p draggable="true" ondragstart="angular.element(document.getElementById('theArtistas')).scope().drag(event)" id="{{espectaculo.id}}">{{espectaculo.nombre}}</p>                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-success">
+                    <div class="panel-heading">All Espectaculos</div>
+                    <div class="panel-body">
+                        <div id="div1" ondrop="angular.element(document.getElementById('theArtistas')).scope().dropDelete(event)" ondragover="angular.element(document.getElementById('theArtistas')).scope().allowDrop(event)">
+                            <label></label>
+                            <div ng-show="edit">
+                            <p draggable="false">Escoge algo</p>                                 
+                        </div>
+                            <div ng-repeat="espectaculo in allEspectaculosShow">
+                                <p draggable="true" ondragstart="angular.element(document.getElementById('theArtistas')).scope().drag(event)" id="{{espectaculo.id}}">{{espectaculo.nombre}}</p>                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="form-group col-sm-4" ng-if="!artista.$valid">
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong><p>All inputs are required*</p>
+                    </div> 
+                </div> 
+            </div> 
+            <div class="form-group row">
+                <div class="form-group col-sm-12">
+                    <input ng-show="artista.$valid" type="submit" value="Guardar" class="button big"/>
+                    <a class="button big" ui-sref="artistasList">Cancelar</a>
+                </div>
+            </div>
+    </form>
+</article>

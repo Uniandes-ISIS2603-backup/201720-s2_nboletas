@@ -39,6 +39,7 @@ public class BoletaEntity extends BaseEntity implements Serializable {
 
     private double precio;
     private boolean vendida;
+    private String imagen;
 
     @PodamExclude
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "boleta")
@@ -64,7 +65,6 @@ public class BoletaEntity extends BaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private SillaEntity silla;
 
-
     public double getPrecio() {
         return precio;
     }
@@ -77,10 +77,9 @@ public class BoletaEntity extends BaseEntity implements Serializable {
         return vendida;
     }
 
-    public void setVenida(boolean venida) {
-        this.vendida = venida;
+    public void setVendida(boolean vendida) {
+        this.vendida = vendida;
     }
-
 
     public ReembolsoEntity getReembolso() {
         return reembolso;
@@ -130,4 +129,19 @@ public class BoletaEntity extends BaseEntity implements Serializable {
         this.silla = silla;
     }
 
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    
 }
